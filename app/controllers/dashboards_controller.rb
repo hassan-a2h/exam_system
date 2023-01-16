@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DashboardsController < ApplicationController
   def show
     case current_user&.type
