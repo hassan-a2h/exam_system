@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # User defined
 
 gem 'devise'
+gem 'jquery-rails'
+gem 'bootstrap'
 
 # Defaults
 
