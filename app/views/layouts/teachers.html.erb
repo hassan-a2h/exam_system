@@ -12,8 +12,10 @@
 
   <body>
     <%= render 'application/teacher_navbar' %>
-    <%= render 'application/alertice' %>
-    <%= yield %>
+    <div class='container'>
+      <%= render 'application/alertice' %>
+      <%= yield %>
+    </div>
   </body>
 </html>
 

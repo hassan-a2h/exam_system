@@ -1,3 +1,7 @@
 <nav class="navbar navbar-dark bg-dark">
-  <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary ml-auto' %>
+  <% if user_signed_in? %>
+    <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger ml-auto' %>
+  <% else %>
+    <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary ml-auto' %>
+  <% end %>
 </nav>
