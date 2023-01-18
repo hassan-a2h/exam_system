@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :teachers
   resources :students
+  resources :exams
 
   resource :dashboard, only: [:show]
 

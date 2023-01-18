@@ -1,0 +1,11 @@
+<h1> Create Exam </h1>
+
+<%= form_with model: @exam, local: true do |f| %>
+  <%= f.hidden_field :teacher_id, value: current_user.id %>
+
+  <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+
+  <%= f.label :title %> <br>
+  <%= f.text_field :title %> <br>
+
+<% end %>
