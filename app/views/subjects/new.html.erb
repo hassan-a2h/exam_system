@@ -1,0 +1,18 @@
+<h1>Add Subject</h1>
+
+<% if @subject.errors.any? %>
+  <% @subject.errors.full_messages.each do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: [current_user, @subject], local: true do |f| %>
+  <%= f.hidden_field :admin_id, value: current_user.id %> <br>
+  <%= f.label :name %> <br>
+  <%= f.text_field :name %> <br>
+  <%= f.label :teacher %> <br>
+  <%= f.select :teacher_id, @teachers.map {|teacher| [teacher.name, teacher.id]} %> <br>
+
+  <br>
+  <%= f.submit %>
+<% end %>

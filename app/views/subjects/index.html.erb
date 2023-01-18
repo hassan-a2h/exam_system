@@ -1,0 +1,29 @@
+<%= link_to 'Create Subject', new_admin_subject_path, class: 'btn btn-primary' %>
+<h1>Subjects</h1>
+
+<% unless @subjects.blank? %>
+  <table>
+    <tr>
+      <th> Id </th>
+      <th> Name </th>
+      <th> Teacher </th>
+      <th> Admin </th>
+      <th> Action </th>
+      <th> Action </th>
+    </tr>
+
+    <% @subjects.each do |subject| %>
+      <tr>
+        <td> <p> <%= subject.id %> </p> </td>
+        <td> <p> <%= subject.name %> </p> </td>
+        <td> <p> <%= subject.teacher.name %> </p> </td>
+        <td> <p> <%= subject.admin.name %> </p> </td>
+        <td> <p> <%= link_to 'Edit', edit_subject_path(subject), class: 'btn btn-secondary' %> </p> </td>
+        <td> <p> <%= link_to 'Delete', subject_path(subject), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p> </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <p> No subjects registered </p>
+<% end %>
