@@ -17,6 +17,20 @@ class AdminsController < ApplicationController
     end
   end
 
+  def edit
+    @admin = Admin.find(params[:id])
+  end
+
+  def update
+    @admin = User.find(params[:id])
+
+    if @admin.update(admin_params)
+      redirect_back_or_to root_path, notice: 'Profile Info Updated'
+    else
+      render :edit
+    end
+  end
+
   private
 
   def admin_params

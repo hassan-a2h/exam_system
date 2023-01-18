@@ -1,0 +1,24 @@
+<h1>Edit User</h1>
+
+<% if @user.errors.any? %>
+  <% @user.errors.full_messages.each do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @user, method: :patch, local: true do |f| %>
+
+  <%= f.label :name %> <br>
+  <%= f.text_field :name %> <br>
+  <%= f.label :email %> <br>
+  <%= f.email_field :email %> <br>
+  <%= f.label :password %> <br>
+  <%= f.password_field :new_password %> <br>
+  <%= f.label :password_confirmation %> <br>
+  <%= f.password_field :password_confirmation %> <br>
+  <%= f.label :type %> <br>
+  <%= f.select :type, ['Student', 'Teacher', 'Admin'] %> <br>
+
+  <br>
+  <%= f.submit %>
+<% end %>

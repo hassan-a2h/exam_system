@@ -1,0 +1,23 @@
+
+<%= link_to 'Invite User', new_user_invitation_path, class: 'btn btn-primary' %>
+<h1>Users</h1>
+
+<table>
+  <tr>
+    <th> Id </th>
+    <th> Name </th>
+    <th> Role </th>
+    <th> Email </th>
+    <th> Action </th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td> <p> <%= user.id %> </p> </td>
+      <td> <p> <%= user.name %> </p> </td>
+      <td> <p> <%= user.type %> </p> </td>
+      <td> <p> <%= user.email %> </p> </td>
+      <td> <p> <%= link_to 'Delete', user_path(user), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p> </td>
+    </tr>
+  <% end %>
+</table>

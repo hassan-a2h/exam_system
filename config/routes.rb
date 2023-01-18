@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     invitations: 'users/invitations'
   }
 
+  resources :users, only: %i[index destroy]
   resources :admins
   resources :teachers
   resources :students
