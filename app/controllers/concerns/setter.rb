@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Setter
   extend ActiveSupport::Concern
 
-  module Subject
+  module SubjectSetter
     include EntityFinder
 
     def set_subject
@@ -9,7 +11,7 @@ module Setter
     end
   end
 
-  module Subject
+  module ExamSetter
     include EntityFinder
 
     def set_exam

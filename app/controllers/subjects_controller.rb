@@ -1,7 +1,9 @@
-class SubjectsController < ApplicationController
-  before_action :set_subject, except: [:index, :new, :create]
+# frozen_string_literal: true
 
-  include Setter::Subject
+class SubjectsController < ApplicationController
+  before_action :set_subject, except: %i[index new create]
+
+  include Setter::SubjectSetter
 
   def index
     @subjects = Subject.all.includes(:teacher, :admin).order(:created_at)

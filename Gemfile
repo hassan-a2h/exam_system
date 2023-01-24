@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # User defined
 
 gem 'bootstrap'
+gem 'cocoon'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'jquery-rails'

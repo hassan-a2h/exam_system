@@ -1,11 +1,45 @@
 <h1> Create Exam </h1>
 
+<% if @exam.errors.any? %>
+  <% @exam.errors.full_messages do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
 <%= form_with model: @exam, local: true do |f| %>
   <%= f.hidden_field :teacher_id, value: current_user.id %>
 
-  <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %>
+  <%= f.label :subject %> <br>
+  <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %> <br>
 
   <%= f.label :title %> <br>
   <%= f.text_field :title %> <br>
 
+  <h4> MCQs </h4>
+
+  <div class='mcqs'>
+    <%= f.fields_for :mcqs do |mcq| %>
+      <%= render 'mcq_fields', f: mcq %>
+    <% end %>
+  </div>
+
+  <h4> <%= f.label :fill_in_the_blank %> </h4>
+
+  <div class='blanks'>
+    <%= f.fields_for :blanks do |blank| %>
+      <%= render 'blank_fields', f: blank %>
+    <% end %>
+  </div>
+
+  <%= link_to_add_association 'Add Mcq', f, :mcqs, class: 'btn btn-primary mb-2', data: {
+    association_insertion_node: '.mcqs', association_insertion_method: :append
+  } %>
+
+  <%= link_to_add_association 'Add FITB', f, :blanks, class: 'btn btn-primary mb-2', data: {
+    association_insertion_node: '.blanks', association_insertion_method: :append
+  } %>
+
+  <br>
+  <%= f.submit %>
 <% end %>
+

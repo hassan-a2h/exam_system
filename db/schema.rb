@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_18_134417) do
+ActiveRecord::Schema.define(version: 2023_01_18_170430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blanks", force: :cascade do |t|
+    t.bigint "exam_id"
+    t.string "text_before"
+    t.string "answer", null: false
+    t.string "text_after"
+    t.integer "marks", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_blanks_on_exam_id"
+  end
 
   create_table "exams", force: :cascade do |t|
     t.string "title", null: false
@@ -27,6 +38,20 @@ ActiveRecord::Schema.define(version: 2023_01_18_134417) do
     t.datetime "updated_at", null: false
     t.index ["subject_id"], name: "index_exams_on_subject_id"
     t.index ["teacher_id"], name: "index_exams_on_teacher_id"
+  end
+
+  create_table "mcqs", force: :cascade do |t|
+    t.bigint "exam_id"
+    t.string "question", null: false
+    t.string "option1", null: false
+    t.string "option2", null: false
+    t.string "option3", null: false
+    t.string "option4", null: false
+    t.integer "marks", null: false
+    t.integer "correct_option", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_mcqs_on_exam_id"
   end
 
   create_table "subjects", force: :cascade do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ExamPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -11,6 +13,10 @@ class ExamPolicy < ApplicationPolicy
   end
 
   def new?
+    user.type == 'Teacher' && !record
+  end
+
+  def create?
     user.type == 'Teacher'
   end
 end
