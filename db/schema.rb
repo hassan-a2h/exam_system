@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_18_170430) do
+ActiveRecord::Schema.define(version: 2023_01_27_130713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,6 @@ ActiveRecord::Schema.define(version: 2023_01_18_170430) do
     t.integer "status", default: 0
     t.bigint "teacher_id", null: false
     t.bigint "subject_id", null: false
-    t.datetime "start_time"
-    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subject_id"], name: "index_exams_on_subject_id"
@@ -52,6 +50,18 @@ ActiveRecord::Schema.define(version: 2023_01_18_170430) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exam_id"], name: "index_mcqs_on_exam_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.bigint "exam_id", null: false
+    t.bigint "teacher_id", null: false
+    t.integer "status", default: 0
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_schedules_on_exam_id"
+    t.index ["teacher_id"], name: "index_schedules_on_teacher_id"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -89,4 +99,5 @@ ActiveRecord::Schema.define(version: 2023_01_18_170430) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "schedules", "exams"
 end

@@ -9,11 +9,11 @@ class InvitationPolicy < ApplicationPolicy
   end
 
   def new?
-    user && user.Admin?
+    user&.Admin?
   end
 
   def create?
-    user && user.Admin?
+    user&.Admin?
   end
 
   def edit?
