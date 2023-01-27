@@ -9,6 +9,6 @@ class SubjectPolicy < ApplicationPolicy
   end
 
   def index?
-    user.type == 'Admin'
+    user.Admin?
   end
 end

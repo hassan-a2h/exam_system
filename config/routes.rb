@@ -14,9 +14,15 @@ Rails.application.routes.draw do
 
   resources :teachers
   resources :students
-  resources :exams, shallow: true do
-    resources :mcqs
-    resources :blank
+  resources :exams do
+    collection do
+      get :approve
+    end
+
+    member do
+      post :accept
+      post :reject
+    end
   end
 
   resource :dashboard, only: [:show]

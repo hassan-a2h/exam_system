@@ -3,20 +3,28 @@
 class ExamPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      if user.Admin?
+        scope.includes(:mcqs, :blanks, :subject).all
+      else
+        scope.includes(:mcqs, :blanks, :subject).where(teacher_id: user.id)
+      end
+    end
   end
 
   def index?
-    user.type == 'Admin' || user.type == 'Teacher'
+    user.Admin? || user.Teacher?
   end
 
   def new?
-    user.type == 'Teacher' && !record
+    user.Teacher? && record == 'empty'
   end
 
   def create?
-    user.type == 'Teacher'
+    user.Teacher?
+  end
+
+  def approve?
+    user.Admin?
   end
 end

@@ -9,11 +9,11 @@ class InvitationPolicy < ApplicationPolicy
   end
 
   def new?
-    user && user.type == 'Admin'
+    user && user.Admin?
   end
 
   def create?
-    user && user.type == 'Admin'
+    user && user.Admin?
   end
 
   def edit?

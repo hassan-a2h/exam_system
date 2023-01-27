@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
-  before_action :set_exam, except: %i[index new create]
+  before_action :set_exam, except: %i[index new create approve]
 
   include Setter::ExamSetter
 
   def index
-    @exams = Exam.all.order(:created_at)
+    @exams = policy_scope(Exam)
     authorize @exams
   end
 
-  def show; end
+  def show
+    authorize @exam, :index?
+  end
 
   def new
-    @previous_exam = Exam.where(teacher_id: current_user.id).find_by(status: :uncertain)
+    @previous_exam = Exam.find_by(teacher_id: current_user.id, status: :uncertain) || 'empty'
     @exam = Exam.new
-    authorize @previous_exam
+    authorize @previous_exam, :new?, policy_class: ExamPolicy
     @subjects = Subject.all
     @exam.mcqs.build
     @exam.blanks.build
@@ -53,6 +55,29 @@ class ExamsController < ApplicationController
       redirect_to root_path, notice: 'Exam removed'
     else
       redirect_to root_path, alert: 'Error! could not remove'
+    end
+  end
+
+  def approve
+    @exams = Exam.where(status: :uncertain)
+    authorize @exams
+  end
+
+  def accept
+    authorize @exam, :approve?
+    if @exam.approved!
+      redirect_to root_path, notice: 'Exam approved'
+    else
+      redirect_to root_path, alert: 'Error! could not approve exam'
+    end
+  end
+
+  def reject
+    authorize @exam, :approve?
+    if @exam.rejected!
+      redirect_to root_path, notice: 'Exam rejected'
+    else
+      redirect_to root_path, alert: 'Error! could not reject exam'
     end
   end
 

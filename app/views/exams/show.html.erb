@@ -1,0 +1,20 @@
+<%= @exam.title %>
+<%= @exam.teacher.name %>
+
+<h3> MCQs </h3>
+<% @exam&.mcqs.each do |mcq| %>
+  <p> <%= mcq.question %> </p>
+  <p> <%= mcq.option1 %> </p>
+  <p> <%= mcq.option2 %> </p>
+  <p> <%= mcq.option3 %> </p>
+  <p> <%= mcq.option4 %> </p>
+  <p> <%= mcq.correct_option %> </p>
+  <p> <%= mcq.marks %> </p>
+<% end %>
+
+<% @exam&.blanks.each do |blank| %>
+  <p> <%= blank.text_before %> </p>
+  <p> <%= blank.answer %> </p>
+  <p> <%= blank.text_after %> </p>
+  <p> <%= blank.marks %> </p>
+<% end %>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Exam < ApplicationRecord
+  default_scope { order(:created_at) }
+
   belongs_to :teacher
   belongs_to :subject
   has_many :mcqs, dependent: :destroy

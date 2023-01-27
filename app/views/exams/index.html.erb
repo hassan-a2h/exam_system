@@ -1,0 +1,32 @@
+<% if current_user.Teacher? %>
+  <%= link_to 'Add Exam', new_exam_path, class: 'btn btn-primary mt-2' %>
+<% elsif current_user.Admin? %>
+  <%= link_to 'Approvals', approve_exams_path, class: 'btn btn-primary mt-2' %>
+<% end %>
+
+<% if @exams.blank? %>
+  <p> No exams found </p>
+<% end %>
+
+<% @exams.each do |exam| %>
+  <div class="card m-2">
+    <h5 class="card-header"> <%= exam.subject.name %> </h5>
+    <div class="card-body">
+      <h5 class="card-title"> <%= exam.title %></h5>
+      <table>
+        <tr>
+          <th> MCQs </th>
+          <th> Fill in the blanks </th>
+          <th> Status </th>
+        </tr>
+        <tr>
+          <td> <%= exam.mcqs.count %> </td>
+          <td> <%= exam.blanks.count %> </td>
+          <td> <%= exam.status %> </td>
+        </tr>
+      </table>
+      <%= link_to 'Remove', exam_path(exam),
+       data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger m-2' %>
+    </div>
+  </div>
+<% end %>

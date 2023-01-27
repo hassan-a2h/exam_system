@@ -1,0 +1,24 @@
+<h1> Pending Approvals </h1>
+
+<% if @exams.blank? %>
+  <p> No exams found </p>
+<% else %>
+<table>
+  <tr>
+    <th> Id </th>
+    <th> MCQs </th>
+    <th> Fill in the blanks </th>
+    <th> Action </th>
+    <th> Action </th>
+  </tr>
+  <% @exams.each do |exam| %>
+    <tr>
+      <td> <%= link_to "#{exam.id}", exam_path(exam) %> </td>
+      <td> <%= exam.mcqs.count %> </td>
+      <td> <%= exam.blanks.count %> </td>
+      <td> <%= link_to 'Approve', accept_exam_path(exam), method: :post, class: 'btn btn-info m-2' %> </td>
+      <td> <%= link_to 'Reject', reject_exam_path(exam), method: :post, class: 'btn btn-danger m-2' %> </td>
+    </tr>
+  <% end %>
+</table>
+<% end %>

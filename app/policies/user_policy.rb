@@ -9,10 +9,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.type == 'Admin'
+    user.Admin?
   end
 
   def destroy?
-    user.type == 'Admin'
+    user.Admin?
   end
 end
