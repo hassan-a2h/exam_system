@@ -50,7 +50,7 @@
 
         <% if current_user.Student? %>
           <% if current_user.Student? && DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
-            <td> <p> <%= link_to 'Attempt', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
+            <td> <p> <%= link_to 'Attempt', attempt_path(schedule), class: 'btn btn-primary' %> </p> </td>
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
           <% else %>

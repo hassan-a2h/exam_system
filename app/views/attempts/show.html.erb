@@ -1,0 +1,47 @@
+<h1> Attempt Exam </h1>
+
+<% if @result&.errors&.any? %>
+  <% @result.errors.full_messages do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @result, local: true do |f| %>
+  <%= f.hidden_field :student_id, value: current_user.id %>
+
+  <h3> MCQs </h3>
+  <% @exam.mcqs.each do |mcq| %>
+    <% counter = 1 %>
+    <p class='alert alert-secondary'> Question#<%= counter %>. <%= mcq.question %> </p>
+    <p>1. <%= mcq.option1 %> </p>
+    <p>2. <%= mcq.option2 %> </p>
+    <p>3. <%= mcq.option3 %> </p>
+    <p>4. <%= mcq.option4 %> </p>
+
+    <div class='mcq_answer'>
+      <%= f.fields_for :mcq_answer do |mcq| %>
+        <%= render 'mcq_answer', f: mcq %>
+      <% end %>
+    </div>
+    <br>
+    <% counter += 1 %>
+  <% end %>
+
+  <h3> Fill in the Blanks </h3>
+  <% @exam.blanks.each do |blank| %>
+    <% counter = 1 %>
+    <p class='alert alert-secondary p-without-newline'> Question#<%= counter %>. </p>
+    <p class='p-without-newline'>  <%= blank&.text_before %>
+    <div class='blank_answer p-without-newline'>
+      <%= f.fields_for :blank_answer do |blank| %>
+        <%= render 'blank_answer', f: blank %>
+      <% end %>
+    </div>
+    <%= blank&.text_after %> </p>
+    <br>
+    <% counter += 1 %>
+  <% end %>
+
+  <%= f.submit 'Submit'%>
+<% end %>
+

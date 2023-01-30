@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_27_130713) do
+ActiveRecord::Schema.define(version: 2023_01_30_120953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blank_answers", force: :cascade do |t|
+    t.bigint "result_id"
+    t.bigint "blank_id", null: false
+    t.string "answer", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blank_id"], name: "index_blank_answers_on_blank_id"
+    t.index ["result_id"], name: "index_blank_answers_on_result_id"
+  end
 
   create_table "blanks", force: :cascade do |t|
     t.bigint "exam_id"
@@ -38,6 +48,16 @@ ActiveRecord::Schema.define(version: 2023_01_27_130713) do
     t.index ["teacher_id"], name: "index_exams_on_teacher_id"
   end
 
+  create_table "mcq_answers", force: :cascade do |t|
+    t.bigint "result_id"
+    t.bigint "mcq_id", null: false
+    t.integer "answer", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mcq_id"], name: "index_mcq_answers_on_mcq_id"
+    t.index ["result_id"], name: "index_mcq_answers_on_result_id"
+  end
+
   create_table "mcqs", force: :cascade do |t|
     t.bigint "exam_id"
     t.string "question", null: false
@@ -50,6 +70,19 @@ ActiveRecord::Schema.define(version: 2023_01_27_130713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exam_id"], name: "index_mcqs_on_exam_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "exam_id", null: false
+    t.bigint "schedule_id", null: false
+    t.integer "total_marks"
+    t.integer "obtained_marks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_results_on_exam_id"
+    t.index ["schedule_id"], name: "index_results_on_schedule_id"
+    t.index ["student_id"], name: "index_results_on_student_id"
   end
 
   create_table "schedules", force: :cascade do |t|

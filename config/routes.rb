@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :results
+  resources :attempts, only: :show
+
   resource :dashboard, only: [:show]
 
   root 'dashboards#show'

@@ -1,0 +1,36 @@
+<h1> Attempt Exam </h1>
+
+<% if @result.errors.any? %>
+  <% @result.errors.full_messages do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @result, local: true do |f| %>
+  <h3> MCQs </h3>
+  <% @exam.mcqs.each do |mcq| %>
+    <% counter = 1 %>
+    <p class='alert alert-secondary'> Question#<%= counter %>. <%= mcq.question %> </p>
+    <p>1. <%= mcq.option1 %> </p>
+    <p>2. <%= mcq.option2 %> </p>
+    <p>3. <%= mcq.option3 %> </p>
+    <p>4. <%= mcq.option4 %> </p>
+
+    <% counter += 1 %>
+  <% end %>
+
+  <h3> Fill in the Blanks </h3>
+  <% @exam.blanks.each do |blank| %>
+    <% counter = 1 %>
+    <p class='alert alert-secondary'> Question#<%= counter %>. </p>
+    <% unless blank.text_before.blank? %>
+      <p class='alert alert-secondary'> <%= blank.text_before %> </p>
+    <% end %>
+
+    <% unless blank.text_before.blank? %>
+      <p class='alert alert-secondary'> <%= blank.text_after %> </p>
+    <% end %>
+  <% counter += 1 %>
+  <% end %>
+<% end %>
+
