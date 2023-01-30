@@ -20,6 +20,8 @@ class Exam < ApplicationRecord
     approved: 2
   }
 
+  scope :by_teacher, ->(user_id) { where("teacher_id = ?", user_id) }
+
   private
 
   def check_blanks

@@ -24,7 +24,12 @@ Rails.application.routes.draw do
       post :reject
     end
   end
-  resources :schedules
+  resources :schedules do
+    member do
+      post :accept
+      post :reject
+    end
+  end
 
   resource :dashboard, only: [:show]
 

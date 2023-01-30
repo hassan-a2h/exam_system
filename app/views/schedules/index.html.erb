@@ -1,0 +1,43 @@
+<% if current_user.Teacher? %>
+  <%= link_to 'Create Schedule', new_schedule_path, class: 'btn btn-primary mt-2' %>
+<% end %>
+<h1>Exam Schedules</h1>
+
+<% unless @schedules.blank? %>
+  <table>
+    <tr>
+      <th> Exam </th>
+      <th> Subject </th>
+      <th> Start Time </th>
+      <th> End Time </th>
+      <th> Approval </th>
+      <th> Status </th>
+      <th> Action </th>
+    </tr>
+
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td> <p> <%= schedule.exam.title[0, 15] %> </p> </td>
+        <td> <p> <%= schedule.exam.subject.name %> </p> </td>
+        <td> <p> <%= schedule.start_time %> </p> </td>
+        <td> <p> <%= schedule.end_time %> </p> </td>
+        <td> <% if current_user.Admin? && schedule.status == 'pending' %>
+                <%= link_to 'Approve', accept_schedule_path(schedule), method: :post, class: 'btn btn-success m-1' %>
+                <%= link_to 'Reject', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
+              <% else %>
+                <p> <%= schedule.status %> </p>
+              <% end %> </td>
+        <td> <% if DateTime.now > schedule.end_time %>
+                <p> Conducted </p>
+              <% elsif DateTime.now < schedule.start_time %>
+                <p> Scheduled </p>
+              <% else %>
+                <p> Taking Place </p>
+              <% end %> </td>
+        <td> <p> <%= link_to 'Delete', schedule_path(schedule), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p> </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p> No schedules made </p>
+<% end %>

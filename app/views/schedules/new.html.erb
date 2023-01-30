@@ -1,0 +1,23 @@
+<h1>Create Exam Schedule</h1>
+
+<% if @schedule.errors.any? %>
+  <% @schedule.errors.full_messages.each do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @schedule, local: true do |f| %>
+  <%= f.hidden_field :teacher_id, value: current_user.id %>
+
+  <%= f.label :exam %> <br>
+  <%= f.select :exam_id, @exams.map { |exam| [exam.title, exam.id] } %> <br>
+
+  <%= f.label :start_time %> <br>
+  <%= f.datetime_select :start_time %> <br>
+
+  <%= f.label :end_time %> <br>
+  <%= f.datetime_select :end_time %> <br>
+
+  <br>
+  <%= f.submit %>
+<% end %>
