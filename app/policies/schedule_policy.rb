@@ -1,16 +1,22 @@
 class SchedulePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      (user.Admin?) ? scope.includes(:exam).all : Schedule.includes(:exam).by_teacher(user.id)
+      if user.Admin?
+        scope.includes(:exam).all
+      elsif user.Teacher?
+        scope.includes(:exam).by_teacher(user.id)
+      else
+        scope.includes(:exam).active_exams
+      end
     end
   end
 
   def index?
-    user && (user.Teacher? || user.Admin?)
+    user
   end
 
   def new?
-    user.Teacher?
+    user && user.Teacher?
   end
 
   def destroy?

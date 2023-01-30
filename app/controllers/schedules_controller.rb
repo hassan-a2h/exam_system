@@ -10,6 +10,7 @@ class SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new
+    authorize @schedule
     @exams = Exam.by_teacher(current_user.id)
   end
 

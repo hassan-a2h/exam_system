@@ -14,6 +14,7 @@ class Schedule < ApplicationRecord
   }
 
   scope :by_teacher, ->(user_id) { where("teacher_id = ?", user_id) }
+  scope :active_exams, -> { where("end_time > ? AND status = ?", DateTime.now, 10) }
 
   private
 

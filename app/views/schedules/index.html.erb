@@ -10,7 +10,9 @@
       <th> Subject </th>
       <th> Start Time </th>
       <th> End Time </th>
-      <th> Approval </th>
+      <% unless current_user.Student? %>
+        <th> Approval </th>
+      <% end %>
       <th> Status </th>
       <th> Action </th>
     </tr>
@@ -21,23 +23,44 @@
         <td> <p> <%= schedule.exam.subject.name %> </p> </td>
         <td> <p> <%= schedule.start_time %> </p> </td>
         <td> <p> <%= schedule.end_time %> </p> </td>
-        <td> <% if current_user.Admin? && schedule.status == 'pending' %>
-                <%= link_to 'Approve', accept_schedule_path(schedule), method: :post, class: 'btn btn-success m-1' %>
-                <%= link_to 'Reject', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
-              <% else %>
-                <p> <%= schedule.status %> </p>
-              <% end %> </td>
-        <td> <% if DateTime.now > schedule.end_time %>
-                <p> Conducted </p>
-              <% elsif DateTime.now < schedule.start_time %>
-                <p> Scheduled </p>
-              <% else %>
-                <p> Taking Place </p>
-              <% end %> </td>
-        <td> <p> <%= link_to 'Delete', schedule_path(schedule), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p> </td>
+        <% unless current_user.Student? %>
+          <td>
+            <% if current_user.Admin? && schedule.status == 'pending' %>
+              <%= link_to 'Approve', accept_schedule_path(schedule), method: :post, class: 'btn btn-success m-1' %>
+              <%= link_to 'Reject', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
+            <% else %>
+              <p> <%= schedule.status %> </p>
+            <% end %>
+          </td>
+        <% end %>
+        <td>
+          <% if DateTime.now > schedule.end_time %>
+            <p> Conducted </p>
+          <% elsif DateTime.now < schedule.start_time %>
+            <p> Scheduled </p>
+          <% else %>
+            <p> Taking Place </p>
+          <% end %>
+        </td>
+        <% unless current_user.Student? %>
+          <td>
+            <p> <%= link_to 'Delete', schedule_path(schedule), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p>
+          </td>
+        <% end %>
+
+        <% if current_user.Student? %>
+          <% if current_user.Student? && DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
+            <td> <p> <%= link_to 'Attempt', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
+          <% elsif DateTime.now > schedule.end_time %>
+            <td> <p> <%= link_to 'View', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
+          <% else %>
+            <td> <p> <%= link_to 'Attempt', root_path, notice: 'not implemented yet', class: 'btn btn-secondary disabled' %> </p> </td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </table>
+
 <% else %>
   <p> No schedules made </p>
 <% end %>
