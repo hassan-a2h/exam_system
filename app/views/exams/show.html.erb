@@ -1,20 +1,36 @@
-<%= @exam.title %>
-<%= @exam.teacher.name %>
-
-<h3> MCQs </h3>
-<% @exam&.mcqs.each do |mcq| %>
-  <p> <%= mcq.question %> </p>
-  <p> <%= mcq.option1 %> </p>
-  <p> <%= mcq.option2 %> </p>
-  <p> <%= mcq.option3 %> </p>
-  <p> <%= mcq.option4 %> </p>
-  <p> <%= mcq.correct_option %> </p>
-  <p> <%= mcq.marks %> </p>
+<% unless @exam.mcqs.blank? %>
+  <h3> MCQs </h3>
 <% end %>
 
-<% @exam&.blanks.each do |blank| %>
-  <p> <%= blank.text_before %> </p>
-  <p> <%= blank.answer %> </p>
-  <p> <%= blank.text_after %> </p>
-  <p> <%= blank.marks %> </p>
+<% i = 0 %>
+<% while i < @exam&.mcqs&.count %>
+  <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= @exam.mcqs[i].question %> </p>
+  <p>1. <%= @exam.mcqs[i].option1 %> </p>
+  <p>2. <%= @exam.mcqs[i].option2 %> </p>
+  <p>3. <%= @exam.mcqs[i].option3 %> </p>
+  <p>4. <%= @exam.mcqs[i].option4 %> </p>
+
+  <hr>
+  <% i += 1 %>
+<% end %>
+
+<% unless @exam.blanks.blank? %>
+  <h3 class='mb-3'> Fill in the blanks </h3>
+<% end %>
+
+<% i = 0 %>
+<% while i < @exam&.blanks&.count %>
+  <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
+  <% unless @exam.blanks[i].text_before.blank? %>
+    <p class='p-without-newline ml-2'> <%= @exam.blanks[i]&.text_before %> </p>
+  <% end %>
+
+  <p class='m-2 alert alert-warning p-without-newline'>  </p>
+
+  <% unless @exam.blanks[i].text_after.blank? %>
+    <p class='p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
+  <% end %>
+
+  <hr>
+  <% i += 1 %>
 <% end %>

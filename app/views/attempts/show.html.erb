@@ -6,12 +6,15 @@
   <% end %>
 <% end %>
 
-<%= form_with model: @result, local: true do |f| %>
+<%= form_with model: @result, url: results_path, local: true do |f| %>
   <%= f.hidden_field :student_id, value: current_user.id %>
+  <%= f.hidden_field :schedule_id, value: @schedule.id %>
+  <%= f.hidden_field :exam_id, value: @schedule.exam_id %>
+  <%= f.hidden_field :total_marks, value: @exam.marks %>
 
   <h3> MCQs </h3>
+  <% counter = 1 %>
   <% @exam.mcqs.each do |mcq| %>
-    <% counter = 1 %>
     <p class='alert alert-secondary'> Question#<%= counter %>. <%= mcq.question %> </p>
     <p>1. <%= mcq.option1 %> </p>
     <p>2. <%= mcq.option2 %> </p>
@@ -19,8 +22,9 @@
     <p>4. <%= mcq.option4 %> </p>
 
     <div class='mcq_answer'>
-      <%= f.fields_for :mcq_answer do |mcq| %>
-        <%= render 'mcq_answer', f: mcq %>
+      <%= f.fields_for :mcq_answers do |mcq_answer| %>
+        <%= mcq_answer.hidden_field :mcq_id, value: mcq.id %>
+        <%= render 'mcq_answer', f: mcq_answer %>
       <% end %>
     </div>
     <br>
@@ -28,16 +32,19 @@
   <% end %>
 
   <h3> Fill in the Blanks </h3>
+  <% counter = 1 %>
   <% @exam.blanks.each do |blank| %>
-    <% counter = 1 %>
     <p class='alert alert-secondary p-without-newline'> Question#<%= counter %>. </p>
-    <p class='p-without-newline'>  <%= blank&.text_before %>
-    <div class='blank_answer p-without-newline'>
-      <%= f.fields_for :blank_answer do |blank| %>
-        <%= render 'blank_answer', f: blank %>
-      <% end %>
-    </div>
-    <%= blank&.text_after %> </p>
+    <p class='p-without-newline'>
+      <%= blank&.text_before %>
+      <div class='blank_answer p-without-newline'>
+        <%= f.fields_for :blank_answers do |blank_answer| %>
+          <%= blank_answer.hidden_field :blank_id, value: blank.id %>
+          <%= render 'blank_answer', f: blank_answer %>
+        <% end %>
+      </div>
+      <%= blank&.text_after %>
+    </p>
     <br>
     <% counter += 1 %>
   <% end %>

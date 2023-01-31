@@ -1,0 +1,27 @@
+<h1> Results </h1>
+
+<% if @results.blank? %>
+  <p> No results found </p>
+
+<% else %>
+  <table>
+    <tr>
+      <th> Student </th>
+      <th> Exam </th>
+      <th> Subject </th>
+      <th> Marks </th>
+      <th> Action </th>
+    </tr>
+
+    <tr>
+      <% @results&.each do |result| %>
+        <td> <%= result.student.name %> </td>
+        <td> <%= result.exam.title %> </td>
+        <td> <%= result.exam.subject.name %> </td>
+        <td> <%= result.obtained_marks %> / <%= result.total_marks %> </td>
+        <td> <%= link_to 'Details', result %> </td>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
+

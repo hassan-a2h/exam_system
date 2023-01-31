@@ -28,6 +28,8 @@
             <% if current_user.Admin? && schedule.status == 'pending' %>
               <%= link_to 'Approve', accept_schedule_path(schedule), method: :post, class: 'btn btn-success m-1' %>
               <%= link_to 'Reject', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
+            <% elsif current_user.Admin? && schedule.status == 'approved' && DateTime.now < schedule.start_time %>
+              <%= link_to 'Cancel', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
             <% else %>
               <p> <%= schedule.status %> </p>
             <% end %>
@@ -54,7 +56,7 @@
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
           <% else %>
-            <td> <p> <%= link_to 'Attempt', root_path, notice: 'not implemented yet', class: 'btn btn-secondary disabled' %> </p> </td>
+            <td> <p> <%= link_to 'Attempt', class: 'btn btn-secondary disabled' %> </p> </td>
           <% end %>
         <% end %>
       </tr>

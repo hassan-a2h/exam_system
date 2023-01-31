@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SchedulePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
@@ -15,8 +17,12 @@ class SchedulePolicy < ApplicationPolicy
     user
   end
 
+  def show?
+    !record && user.Student?
+  end
+
   def new?
-    user && user.Teacher?
+    user&.Teacher?
   end
 
   def destroy?

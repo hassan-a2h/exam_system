@@ -1,0 +1,54 @@
+<h1> Result </h1>
+
+<table>
+  <tr>
+    <th> Total </th>
+    <th> Marks Scored </th>
+  </tr>
+
+  <tr>
+    <td> <%= @result&.total_marks %> </td>
+    <td> <%= @result&.obtained_marks %> </td>
+  </tr>
+</table>
+<hr>
+
+<% i = 0 %>
+<% while i < @exam&.mcqs&.count %>
+  <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= @exam.mcqs[i].question %> </p>
+  <p>1. <%= @exam.mcqs[i].option1 %> </p>
+  <p>2. <%= @exam.mcqs[i].option2 %> </p>
+  <p>3. <%= @exam.mcqs[i].option3 %> </p>
+  <p>4. <%= @exam.mcqs[i].option4 %> </p>
+
+  <% if @exam.mcqs[i].correct_option != @result.mcq_answers[i].answer%>
+    <p class='alert alert-danger'> Selected: <%= @result.mcq_answers[i].answer %> </p>
+    <p class='alert alert-primary'> Correct: <%= @exam.mcqs[i].correct_option %> </p>
+  <% else %>
+    <p class='alert alert-success'> Correct: <%= @result.mcq_answers[i].answer %> </p>
+  <% end %>
+
+  <hr>
+  <% i += 1 %>
+<% end %>
+
+<% unless @exam.blanks.blank? %>
+  <h1> Fill in the blanks </h1>
+<% end %>
+
+<% i = 0 %>
+<% while i < @exam&.blanks&.count %>
+  <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
+  <p class='alert alert-secondary p-without-newline'> <%= @exam.blanks[i]&.text_before %> </p>
+  <p class='alert alert-secondary p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
+
+  <% if @exam.blanks[i].answer.downcase != @result.blank_answers[i].answer.downcase %>
+    <p class='alert alert-danger'> Selected: <%= @result.blank_answers[i].answer %> </p>
+    <p class='alert alert-primary'> Correct: <%= @exam.blanks[i].answer %> </p>
+  <% else %>
+    <p class='alert alert-success'> Correct: <%= @exam.blanks[i].answer %> </p>
+  <% end %>
+
+  <hr>
+  <% i += 1 %>
+<% end %>

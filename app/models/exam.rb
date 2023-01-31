@@ -3,9 +3,12 @@
 class Exam < ApplicationRecord
   default_scope { order(:created_at) }
 
+  before_save :calculate_total_marks
+
   belongs_to :teacher
   belongs_to :subject
-  has_many :schedules
+  has_many :schedules, dependent: :destroy
+  has_many :results, dependent: :destroy
 
   has_many :mcqs, dependent: :destroy
   accepts_nested_attributes_for :mcqs, allow_destroy: true, reject_if: :check_mcqs
@@ -20,7 +23,7 @@ class Exam < ApplicationRecord
     approved: 2
   }
 
-  scope :by_teacher, ->(user_id) { where("teacher_id = ?", user_id) }
+  scope :by_teacher, ->(user_id) { where('teacher_id = ?', user_id) }
 
   private
 
@@ -30,5 +33,16 @@ class Exam < ApplicationRecord
 
   def check_mcqs
     false
+  end
+
+  def calculate_total_marks
+    self.marks = 0
+    mcqs.each do |mcq|
+      self.marks += mcq.marks
+    end
+
+    blanks.each do |blank|
+      self.marks += blank.marks
+    end
   end
 end

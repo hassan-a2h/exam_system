@@ -17,7 +17,7 @@
 
   <h4> MCQs </h4>
 
-  <div class='mcqs'>
+  <div class='mcq-fields'>
     <%= f.fields_for :mcqs do |mcq| %>
       <%= render 'mcq_fields', f: mcq %>
     <% end %>
@@ -25,18 +25,18 @@
 
   <h4> <%= f.label :fill_in_the_blank %> </h4>
 
-  <div class='blanks'>
+  <div class='blank-fields'>
     <%= f.fields_for :blanks do |blank| %>
       <%= render 'blank_fields', f: blank %>
     <% end %>
   </div>
 
   <%= link_to_add_association 'Add Mcq', f, :mcqs, class: 'btn btn-primary mb-2', data: {
-    association_insertion_node: '.mcqs', association_insertion_method: :append
+    association_insertion_node: '.mcq-fields', association_insertion_method: :append
   } %>
 
   <%= link_to_add_association 'Add FITB', f, :blanks, class: 'btn btn-primary mb-2', data: {
-    association_insertion_node: '.blanks', association_insertion_method: :append
+    association_insertion_node: '.blank-fields', association_insertion_method: :append
   } %>
 
   <br>

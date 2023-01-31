@@ -30,7 +30,7 @@ class ExamsController < ApplicationController
     if @exam.save
       redirect_to root_path, notice: 'Exam Created (Approval Pending)'
     else
-      redirect_to new_exam_path, alert: 'Could not save exam'
+      render :new
     end
   end
 

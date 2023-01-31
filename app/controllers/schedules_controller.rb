@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class SchedulesController < ApplicationController
   include Setter::ScheduleSetter
 
-  before_action :set_schedule, only: [:destroy, :accept, :reject]
+  before_action :set_schedule, only: %i[destroy accept reject]
 
   def index
     @schedules = policy_scope(Schedule)
@@ -49,7 +51,7 @@ class SchedulesController < ApplicationController
     authorize @schedule, :accept?
 
     if @schedule.rejected!
-      redirect_to schedules_path, notice: 'Schedule Rejected'
+      redirect_to schedules_path, notice: 'Schedule disapproved'
     else
       redirect_to schedules_path, alert: 'Could not reject Schedule'
     end

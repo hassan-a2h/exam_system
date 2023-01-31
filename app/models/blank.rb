@@ -9,7 +9,7 @@ class Blank < ApplicationRecord
   private
 
   def around_text
-    return if text_after.present? || before_after.present?
+    return if text_after.present? || text_before.present?
 
     errors.add(:base, 'Invalid fill in the blank')
   end
