@@ -20,3 +20,11 @@
 //= require bootstrap
 //= require cocoon
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  $('f').on('click', '.remove-fields', function(event) {
+    $(this).prev('input[type=hidden]').val('1');
+    $(this).closest('fieldset').hide();
+    return event.preventDefault();
+  });
+});

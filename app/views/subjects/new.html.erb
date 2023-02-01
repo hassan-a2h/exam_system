@@ -9,7 +9,7 @@
 <%= form_with model: [current_user, @subject], local: true do |f| %>
   <%= f.hidden_field :admin_id, value: current_user.id %> <br>
   <%= f.label :name %> <br>
-  <%= f.text_field :name %> <br>
+  <%= f.text_field :name, required: true %> <br>
   <%= f.label :teacher %> <br>
   <%= f.select :teacher_id, @teachers.map {|teacher| [teacher.name, teacher.id]} %> <br>
 

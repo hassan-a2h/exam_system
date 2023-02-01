@@ -18,7 +18,6 @@ class ExamsController < ApplicationController
     @previous_exam = Exam.find_by(teacher_id: current_user.id, status: :uncertain) || 'empty'
     @exam = Exam.new
     authorize @previous_exam, :new?, policy_class: ExamPolicy
-    @subjects = Subject.all
     @exam.mcqs.build
     @exam.blanks.build
   end
@@ -85,7 +84,7 @@ class ExamsController < ApplicationController
 
   def exam_params
     params.require(:exam).permit(:teacher_id, :subject_id, :title,
-                                 mcqs_attributes: Mcq.attribute_names.map(&:to_sym),
-                                 blanks_attributes: Blank.attribute_names.map(&:to_sym))
+                                 mcqs_attributes: Mcq.attribute_names.map(&:to_sym).push(:_destroy),
+                                 blanks_attributes: Blank.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end

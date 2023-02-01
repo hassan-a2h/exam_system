@@ -18,8 +18,12 @@ The admin can invite students and teachers, and can also views statistics of exa
 * rubocop-rails, for enforcing styles
 * jquery-rails, helper for bootstrap
 * devise_invitable, for invitations
+* cocoon, for nested forms
+* dot-env, for storing sensitive information
 
 # Setup required
 
+* Populate .env file with gmail credentials
 * Setup mailer using gmail for sending invitation mails
 * require jquery in Application.js to send delete requests
+* Amazon S3 is used for online storage, setup its credentials as well

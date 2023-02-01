@@ -21,8 +21,8 @@
       <tr>
         <td> <p> <%= schedule.exam.title[0, 15] %> </p> </td>
         <td> <p> <%= schedule.exam.subject.name %> </p> </td>
-        <td> <p> <%= schedule.start_time %> </p> </td>
-        <td> <p> <%= schedule.end_time %> </p> </td>
+        <td> <p> <%= convert_to_local_time(schedule.start_time) %> </p> </td>
+        <td> <p> <%= convert_to_local_time(schedule.end_time) %> </p> </td>
         <% unless current_user.Student? %>
           <td>
             <% if current_user.Admin? && schedule.status == 'pending' %>

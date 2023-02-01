@@ -12,8 +12,6 @@ Rails.application.routes.draw do
     resources :subjects, except: :show
   end
 
-  resources :teachers
-  resources :students
   resources :exams do
     collection do
       get :approve
@@ -33,7 +31,6 @@ Rails.application.routes.draw do
 
   resources :results
   resources :attempts, only: :show
-
   resource :dashboard, only: [:show]
 
   root 'dashboards#show'

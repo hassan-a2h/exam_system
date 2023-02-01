@@ -1,4 +1,36 @@
+<% unless user_signed_in? %>
 <h1> Welcome </h2>
 <p> Online Exam System provides free evaluation services, making it easier
   than ever to take test of any Subject. The results are unbiased and exams
   go through rigorous checking before they are published. </p>
+<% else %>
+  <h2> Welcome </h2>
+
+  <% if current_user.Student? %>
+    <table>
+      <tr colspan='2'>
+        <%= link_to 'Add picture', '#', class: 'btn btn-secondary disabled' %>
+      </tr>
+      <tr>
+        <td> <strong> Name </strong> </td>
+        <td> <%= current_user.name %> </td>
+      </tr>
+      <tr>
+        <td> <strong> Role </strong> </td>
+        <td> <%= current_user.type %> </td>
+      </tr>
+    </table>
+
+  <% else %>
+    <table>
+      <tr>
+        <td> <strong> Name </strong> </td>
+        <td> <%= current_user.name %> </td>
+      </tr>
+      <tr>
+        <td> <strong> Role </strong> </td>
+        <td> <%= current_user.type %> </td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>

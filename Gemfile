@@ -4,12 +4,14 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # User defined
-
+gem 'aws-sdk-s3'
 gem 'bootstrap'
 gem 'cocoon'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
+gem 'dotenv-rails', groups: %i[development test]
 gem 'jquery-rails'
+gem 'net-http'
 gem 'pundit'
 gem 'rubocop-rails', require: false
 

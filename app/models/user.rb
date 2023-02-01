@@ -6,6 +6,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :name, :email, :type, presence: true
+
   enum type: {
     Admin: 0,
     Teacher: 1,

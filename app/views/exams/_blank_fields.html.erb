@@ -6,12 +6,16 @@
     <%= f.text_field :text_before %> <br>
 
     <%= f.label :answer %>
-    <%= f.text_field :answer %> <br>
+    <%= f.text_field :answer, required: true %> <br>
 
     <%= f.label :after_part %>
     <%= f.text_field :text_after %> <br>
 
     <%= f.label :marks %>
     <%= f.number_field :marks, in: 1..10 %> <br>
+
+    <br>
+    <% f.hidden_field :_destroy %>
+    <%= link_to 'Remove', '#', class: 'remove-fields btn btn-danger ml-auto' %>
   </div>
 </div>

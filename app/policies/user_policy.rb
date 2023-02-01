@@ -9,10 +9,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.Admin?
-  end
-
-  def destroy?
-    user.Admin?
+    user&.Admin?
   end
 end

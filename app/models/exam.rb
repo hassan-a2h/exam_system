@@ -16,6 +16,7 @@ class Exam < ApplicationRecord
   accepts_nested_attributes_for :blanks, allow_destroy: true, reject_if: :check_blanks
 
   validates :title, presence: true
+  validate :associated_attributes
 
   enum status: {
     uncertain: 0,
@@ -44,5 +45,11 @@ class Exam < ApplicationRecord
     blanks.each do |blank|
       self.marks += blank.marks
     end
+  end
+
+  def associated_attributes
+    return unless mcqs.blank? && blanks.blank?
+
+    errors.add(:base, 'An exam needs to have at least one question')
   end
 end

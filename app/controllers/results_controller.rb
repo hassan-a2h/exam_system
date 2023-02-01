@@ -20,7 +20,7 @@ class ResultsController < ApplicationController
     if @result.save
       redirect_to @result
     else
-      redirect_to root_path, alert: 'Could not save result'
+      redirect_to root_path, alert: 'Must answer all questions'
     end
   end
 

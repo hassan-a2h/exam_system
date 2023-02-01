@@ -10,16 +10,15 @@
   <%= f.hidden_field :teacher_id, value: current_user.id %>
 
   <%= f.label :subject %> <br>
-  <%= f.select :subject_id, @subjects.map{|subject| [subject.name, subject.id]} %> <br>
+  <%= f.select :subject_id, subjects_list %> <br>
 
   <%= f.label :title %> <br>
-  <%= f.text_field :title %> <br>
+  <%= f.text_field :title, required: true %> <br>
 
   <h4> MCQs </h4>
 
   <div class='mcq-fields'>
     <%= f.fields_for :mcqs do |mcq| %>
-      <%= render 'mcq_fields', f: mcq %>
     <% end %>
   </div>
 
@@ -27,7 +26,6 @@
 
   <div class='blank-fields'>
     <%= f.fields_for :blanks do |blank| %>
-      <%= render 'blank_fields', f: blank %>
     <% end %>
   </div>
 
