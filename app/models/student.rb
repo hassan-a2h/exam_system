@@ -21,7 +21,7 @@ class Student < User
   def picture_size
     return unless picture.attached?
 
-    return unless picture.attached.byte_size > 2_000_000
+    return unless picture.byte_size > 2_000_000
 
     errors.add(:picture, 'File size exceeded (max size: 2MB)')
   end

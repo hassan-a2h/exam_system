@@ -22,7 +22,7 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def new?
-    user&.Teacher? && record
+    user.Teacher? && record
   end
 
   def destroy?

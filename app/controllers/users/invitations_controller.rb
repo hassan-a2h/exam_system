@@ -35,7 +35,7 @@ module Users
     protected
 
     def configure_permitted_params
-      devise_parameter_sanitizer.permit(:user, keys: %i[name email type])
+      devise_parameter_sanitizer.permit(:user, keys: [:picture, :name, :email, :type])
     end
   end
 end

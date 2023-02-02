@@ -6,18 +6,10 @@
   <% end %>
 <% end %>
 
-<%= form_with model: @user, method: :patch, local: true do |f| %>
+<%= form_with model: @user, url: user_path, method: :patch, local: true do |f| %>
 
-  <%= f.label :name %> <br>
-  <%= f.text_field :name %> <br>
-  <%= f.label :email %> <br>
-  <%= f.email_field :email %> <br>
-  <%= f.label :password %> <br>
-  <%= f.password_field :new_password %> <br>
-  <%= f.label :password_confirmation %> <br>
-  <%= f.password_field :password_confirmation %> <br>
-  <%= f.label :type %> <br>
-  <%= f.select :type, ['Student', 'Teacher', 'Admin'] %> <br>
+  <%= f.label :picture %> <br>
+  <%= f.file_field :picture %> <br>
 
   <br>
   <%= f.submit %>

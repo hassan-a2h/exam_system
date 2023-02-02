@@ -10,7 +10,7 @@ class Result < ApplicationRecord
   has_many :blank_answers, dependent: :destroy
   accepts_nested_attributes_for :blank_answers, allow_destroy: true, reject_if: :blank_answer_validator
 
-  validate :all_questions_attempted
+  # validate :all_questions_attempted
 
   private
 

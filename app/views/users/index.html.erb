@@ -13,6 +13,9 @@
 
   <% @users.each do |user| %>
     <tr>
+      <% if user.id == current_user.id %>
+        <% next %>
+      <% end %>
       <td> <p> <%= user.id %> </p> </td>
       <td> <p> <%= user.name %> </p> </td>
       <td> <p> <%= user.type %> </p> </td>

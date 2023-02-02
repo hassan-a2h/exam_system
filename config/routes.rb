@@ -2,11 +2,10 @@
 
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
     invitations: 'users/invitations'
   }
 
-  resources :users, only: %i[index destroy]
+  resources :users, only: %i[index destroy edit update]
 
   resources :admins, shallow: true do
     resources :subjects, except: :show

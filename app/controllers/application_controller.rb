@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :configure_permitted_attributes, if: :devise_controller?
   include Pundit::Authorization
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -14,5 +15,9 @@ class ApplicationController < ActionController::Base
 
   def no_record
     redirect_to root_path, alert: 'Whoops, record not found'
+  end
+
+  def configure_permitted_attributes
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:type, :name])
   end
 end
