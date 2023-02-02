@@ -31,3 +31,37 @@
 
 en:
   hello: "Hello world"
+  pundit:
+    default: 'Whoops, Action not allowed'
+    attempt_policy:
+      index?: 'You can attempt this exam'
+
+    exam_policy:
+      index?: 'Restricted Access (Admins and Teachers only)'
+      new?: 'Approval of previous exam pending'
+      create?: 'Only Teacher can create exams'
+      approve?: 'Only Admin can approve exams'
+
+    invitation_policy:
+      new?: 'Only Admin can invite new users'
+      create?: 'Only Admin can create new users'
+      edit?: 'Current User must be logged out'
+      update?: 'Current User must be logged out'
+
+    result_policy:
+      index?: 'User must be logged in'
+
+    schedule_policy:
+      index?: 'User must be logged in'
+      new?: 'Only Teacher can create an exam'
+      accept?: 'Only Admin can approve a Schedule'
+      destroy?: 'Action not allowed (Only Admin and Teacher can remove Schedule)'
+
+    subject_policy:
+      index?: 'Error, Only admin has access'
+
+    user_policy:
+      index?: 'Error, only admin has access'
+      edit?: 'Error, only Student has access'
+      update?: 'Error, only Student has access'
+

@@ -9,8 +9,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def user_not_authorized
-    redirect_to root_path, alert: 'Whoops, action not allowed'
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+
+    flash[:alert] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    redirect_to root_path
   end
 
   def no_record

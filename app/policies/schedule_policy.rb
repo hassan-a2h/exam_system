@@ -17,10 +17,6 @@ class SchedulePolicy < ApplicationPolicy
     user
   end
 
-  def show?
-    !record && user.Student?
-  end
-
   def new?
     user.Teacher? && record
   end
