@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def user_not_authorized(exception)
     policy_name = exception.policy.class.to_s.underscore
 
-    flash[:alert] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    flash[:alert] = t "#{policy_name}.#{exception.query}", scope: 'pundit', default: :default
     redirect_to root_path
   end
 
@@ -21,6 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_attributes
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:type, :name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[type name])
   end
 end

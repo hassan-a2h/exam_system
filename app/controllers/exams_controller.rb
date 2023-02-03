@@ -11,7 +11,7 @@ class ExamsController < ApplicationController
   end
 
   def show
-    authorize @exam, :index?
+    authorize @exam
   end
 
   def new

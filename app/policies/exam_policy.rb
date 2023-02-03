@@ -16,6 +16,10 @@ class ExamPolicy < ApplicationPolicy
     user.Admin? || user.Teacher?
   end
 
+  def show?
+    user
+  end
+
   def new?
     user.Teacher? && record == 'empty'
   end

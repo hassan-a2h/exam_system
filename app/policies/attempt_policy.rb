@@ -8,7 +8,7 @@ class AttemptPolicy < ApplicationPolicy
     # end
   end
 
-  def index?
-    !record && user.Student?
+  def show?
+    user.Student?
   end
 end

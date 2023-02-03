@@ -5,7 +5,7 @@ class Schedule < ApplicationRecord
 
   belongs_to :teacher
   belongs_to :exam
-  has_many :results
+  has_many :results, dependent: :destroy
 
   validates :teacher_id, :exam_id, :start_time, :end_time, presence: true
   validate :start_and_end_time

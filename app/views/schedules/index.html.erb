@@ -54,7 +54,7 @@
           <% if current_user.Student? && DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
             <td> <p> <%= link_to 'Attempt', attempt_path(schedule), class: 'btn btn-primary' %> </p> </td>
           <% elsif DateTime.now > schedule.end_time %>
-            <td> <p> <%= link_to 'View', root_path, notice: 'not implemented yet', class: 'btn btn-primary' %> </p> </td>
+            <td> <p> <%= link_to 'View', exam_path(schedule.exam_id), class: 'btn btn-primary' %> </p> </td>
           <% else %>
             <td> <p> <%= link_to 'Attempt', class: 'btn btn-secondary disabled' %> </p> </td>
           <% end %>

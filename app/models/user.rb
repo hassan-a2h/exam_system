@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  default_scope { order(:created_at) }
   validates :name, :email, :type, presence: true
 
   enum type: {

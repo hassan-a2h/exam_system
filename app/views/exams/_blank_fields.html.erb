@@ -1,21 +1,22 @@
+<div class='nested-fields'>
+  <div class="card m-2">
+    <h5 class="card-header">FITB</h5>
+    <div class="card-body">
+      <%= f.label :before_part %>
+      <%= f.text_field :text_before %> <br>
 
-<div class="card m-2">
-  <h5 class="card-header">FITB</h5>
-  <div class="card-body">
-    <%= f.label :before_part %>
-    <%= f.text_field :text_before %> <br>
+      <%= f.label :answer %>
+      <%= f.text_field :answer, required: true %> <br>
 
-    <%= f.label :answer %>
-    <%= f.text_field :answer, required: true %> <br>
+      <%= f.label :after_part %>
+      <%= f.text_field :text_after %> <br>
 
-    <%= f.label :after_part %>
-    <%= f.text_field :text_after %> <br>
+      <%= f.label :marks %>
+      <%= f.number_field :marks, in: 1..10 %> <br>
 
-    <%= f.label :marks %>
-    <%= f.number_field :marks, in: 1..10 %> <br>
-
-    <br>
-    <% f.hidden_field :_destroy %>
-    <%= link_to 'Remove', '#', class: 'remove-fields btn btn-danger ml-auto' %>
+      <br>
+      <% f.hidden_field :_destroy %>
+      <%= link_to_remove_association 'Remove', f, class: 'remove-fields btn btn-danger ml-auto' %>
+    </div>
   </div>
 </div>

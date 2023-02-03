@@ -39,11 +39,12 @@
 <% i = 0 %>
 <% while i < @exam&.blanks&.count %>
   <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
-  <p class='alert alert-secondary p-without-newline'> <%= @exam.blanks[i]&.text_before %> </p>
-  <p class='alert alert-secondary p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
+  <p class='p-without-newline'> <%= @exam.blanks[i]&.text_before %> </p>
+  <p class='alert alert-secondary p-without-newline'> </p>
+  <p class='p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
 
   <% if @exam.blanks[i].answer.downcase != @result.blank_answers[i].answer.downcase %>
-    <p class='alert alert-danger'> Selected: <%= @result.blank_answers[i].answer %> </p>
+    <p class='alert alert-danger'> Answered: <%= @result.blank_answers[i].answer %> </p>
     <p class='alert alert-primary'> Correct: <%= @exam.blanks[i].answer %> </p>
   <% else %>
     <p class='alert alert-success'> Correct: <%= @exam.blanks[i].answer %> </p>

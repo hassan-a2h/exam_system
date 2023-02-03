@@ -1,0 +1,73 @@
+<h1> Create Exam </h1>
+
+<% if @exam.errors.any? %>
+  <% @exam.errors.full_messages do |error| %>
+    <p class='alert alert-danger'> <%= error %> </p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @exam, local: true do |f| %>
+  <%= f.hidden_field :teacher_id, value: current_user.id %>
+
+  <%= f.label :subject %> <br>
+  <%= f.select :subject_id, subjects_list %> <br>
+
+  <%= f.label :title %> <br>
+  <%= f.text_field :title, required: true %> <br>
+
+  <h4> MCQs </h4>
+
+  <% i = 0 %>
+  <% while i < @exam&.mcqs&.count %>
+    <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= @exam.mcqs[i].question %> </p>
+    <p>1. <%= @exam.mcqs[i].option1 %> </p>
+    <p>2. <%= @exam.mcqs[i].option2 %> </p>
+    <p>3. <%= @exam.mcqs[i].option3 %> </p>
+    <p>4. <%= @exam.mcqs[i].option4 %> </p>
+
+    <p class='alert alert-primary'> Correct: <%= @exam.mcqs[i].correct_option %> </p>
+    <%= link_to 'Remove', @exam.mcqs[i], method: :delete, data: { confirm: 'Are you sure?' },
+        class: 'btn btn-danger' %>
+    <hr>
+    <% i += 1 %>
+  <% end %>
+
+  <div class='mcq-fields'>
+    <%= f.fields_for :mcqs do |mcq| %>
+    <% end %>
+  </div>
+
+  <h4> <%= f.label :fill_in_the_blank %> </h4>
+
+  <% i = 0 %>
+  <% while i < @exam&.blanks&.count %>
+    <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
+    <p class='p-without-newline m-2'> <%= @exam.blanks[i]&.text_before %> </p>
+    <p class='alert alert-secondary p-without-newline m-2'> </p>
+    <p class='p-without-newline m-2'> <%= @exam.blanks[i]&.text_after %> </p>
+
+    <p class='alert alert-primary mt-4'> Correct: <%= @exam.blanks[i].answer %> </p>
+    <%= link_to 'Remove', @exam.blanks[i], method: :delete, data: { confirm: 'Are you sure?' },
+        class: 'btn btn-danger' %>
+
+    <hr>
+    <% i += 1 %>
+  <% end %>
+
+  <div class='blank-fields'>
+    <%= f.fields_for :blanks do |blank| %>
+    <% end %>
+  </div>
+
+  <%= link_to_add_association 'Add Mcq', f, :mcqs, class: 'btn btn-primary mb-2', data: {
+    association_insertion_node: '.mcq-fields', association_insertion_method: :append
+  } %>
+
+  <%= link_to_add_association 'Add FITB', f, :blanks, class: 'btn btn-primary mb-2', data: {
+    association_insertion_node: '.blank-fields', association_insertion_method: :append
+  } %>
+
+  <br>
+  <%= f.submit %>
+<% end %>
+

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Result < ApplicationRecord
+  default_scope { order(:created_at) }
+
   belongs_to :student
   belongs_to :schedule
   belongs_to :exam

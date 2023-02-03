@@ -34,7 +34,7 @@ en:
   pundit:
     default: 'Whoops, Action not allowed'
     attempt_policy:
-      index?: 'You can attempt this exam'
+      show?: 'Only students can attempt'
 
     exam_policy:
       index?: 'Restricted Access (Admins and Teachers only)'
@@ -53,7 +53,7 @@ en:
 
     schedule_policy:
       index?: 'User must be logged in'
-      new?: 'Only Teacher can create an exam'
+      new?: 'Exams must exist (Teacher only)'
       accept?: 'Only Admin can approve a Schedule'
       destroy?: 'Action not allowed (Only Admin and Teacher can remove Schedule)'
 

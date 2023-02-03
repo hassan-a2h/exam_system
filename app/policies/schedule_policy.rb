@@ -8,7 +8,7 @@ class SchedulePolicy < ApplicationPolicy
       elsif user.Teacher?
         scope.includes(:exam).by_teacher(user.id)
       else
-        scope.includes(:exam).active_exams
+        scope.includes(:exam)
       end
     end
   end
@@ -18,7 +18,7 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def new?
-    user.Teacher? && record
+    user.Teacher? && !record.blank?
   end
 
   def destroy?

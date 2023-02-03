@@ -25,6 +25,7 @@
           <td> <%= exam.status %> </td>
         </tr>
       </table>
+      <%= link_to 'Update', edit_exam_path(exam), class: 'btn btn-secondary m-2' %>
       <%= link_to 'Remove', exam_path(exam),
        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger m-2' %>
     </div>
