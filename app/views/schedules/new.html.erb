@@ -10,7 +10,7 @@
   <%= f.hidden_field :teacher_id, value: current_user.id %>
 
   <%= f.label :exam %> <br>
-  <%= f.select :exam_id, @exams.map { |exam| [exam.title, exam.id] } %> <br>
+  <%= f.select :exam_id, exams_list %> <br>
 
   <%= f.label :start_time %> <br>
   <%= f.datetime_select :start_time %> <br>

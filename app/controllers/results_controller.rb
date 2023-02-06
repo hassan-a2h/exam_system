@@ -6,14 +6,15 @@ class ResultsController < ApplicationController
     authorize @results
   end
 
-  def new
-    @result = Result.new
-    schedule = Schedule.find(params[:id])
-    @exam = Exam.includes(:mcqs, :blanks).find(schedule.exam_id)
+  def show
+    @result = Result.includes(:mcq_answers, :blank_answers).find(params[:id])
+    @exam = Exam.includes(:mcqs, :blanks).find(@result.exam_id)
   end
 
   def create
     @result = Result.new(result_params)
+    @schedule = Schedule.find(@result.schedule_id)
+    authorize @schedule, :create?, policy_class: ResultPolicy
     @result.obtained_marks = calculate_obtained_marks(@result,
                                                       Exam.find(@result.exam_id))
 
@@ -22,11 +23,6 @@ class ResultsController < ApplicationController
     else
       redirect_to root_path, alert: 'Must answer all questions'
     end
-  end
-
-  def show
-    @result = Result.includes(:mcq_answers, :blank_answers).find(params[:id])
-    @exam = Exam.includes(:mcqs, :blanks).find(@result.exam_id)
   end
 
   private

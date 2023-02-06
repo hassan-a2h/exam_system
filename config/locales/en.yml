@@ -50,6 +50,7 @@ en:
 
     result_policy:
       index?: 'User must be logged in'
+      create?: 'Due time for exam has passed (Student Only)'
 
     schedule_policy:
       index?: 'User must be logged in'

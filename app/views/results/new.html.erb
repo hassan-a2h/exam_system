@@ -1,7 +1,7 @@
 <h1> Attempt Exam </h1>
 
 <% if @result.errors.any? %>
-  <% @result.errors.full_messages do |error| %>
+  <% @result.errors.full_messages.each do |error| %>
     <p class='alert alert-danger'> <%= error %> </p>
   <% end %>
 <% end %>

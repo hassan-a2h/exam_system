@@ -4,13 +4,7 @@
 
 <% i = 0 %>
 <% while i < @exam&.mcqs&.count %>
-  <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= @exam.mcqs[i].question %> </p>
-  <p>1. <%= @exam.mcqs[i].option1 %> </p>
-  <p>2. <%= @exam.mcqs[i].option2 %> </p>
-  <p>3. <%= @exam.mcqs[i].option3 %> </p>
-  <p>4. <%= @exam.mcqs[i].option4 %> </p>
-
-  <hr>
+  <%= render 'mcq', mcq: @exam.mcqs[i], counter: i + 1 %>
   <% i += 1 %>
 <% end %>
 
@@ -20,17 +14,7 @@
 
 <% i = 0 %>
 <% while i < @exam&.blanks&.count %>
-  <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
-  <% unless @exam.blanks[i].text_before.blank? %>
-    <p class='p-without-newline ml-2'> <%= @exam.blanks[i]&.text_before %> </p>
-  <% end %>
-
-  <p class='m-2 alert alert-warning p-without-newline'>  </p>
-
-  <% unless @exam.blanks[i].text_after.blank? %>
-    <p class='p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
-  <% end %>
-
+  <%= render 'blank', blank: @exam&.blanks[i], counter: i + 1 %>
   <hr>
   <% i += 1 %>
 <% end %>

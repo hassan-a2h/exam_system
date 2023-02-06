@@ -1,0 +1,12 @@
+<p class='alert alert-secondary mt-2'> Question#<%= counter %>. <%= mcq.question %> [ <%= mcq.marks %> ] </p>
+<p>1. <%= mcq.option1 %> </p>
+<p>2. <%= mcq.option2 %> </p>
+<p>3. <%= mcq.option3 %> </p>
+<p>4. <%= mcq.option4 %> </p>
+
+<div class='mcq_answer'>
+  <%= f.fields_for :mcq_answers do |mcq_answer| %>
+    <%= mcq_answer.hidden_field :mcq_id, value: mcq.id %>
+    <%= render 'mcq_answer', f: mcq_answer %>
+  <% end %>
+</div>

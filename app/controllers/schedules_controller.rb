@@ -12,8 +12,7 @@ class SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new
-    @exams = Exam.by_teacher(current_user.id)
-    authorize @exams, :new?, policy_class: SchedulePolicy
+    authorize @schedule
   end
 
   def create
@@ -23,7 +22,7 @@ class SchedulesController < ApplicationController
     if @schedule.save
       redirect_to root_path, notice: 'Exam Scheduled (Approval Pending)'
     else
-      redirect_to new_schedule_path, notice: 'Could not save exam'
+      render :new
     end
   end
 

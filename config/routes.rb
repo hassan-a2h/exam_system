@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :results
+  resources :results, only: [:index, :show, :create]
   resources :mcqs, only: :destroy
   resources :blanks, only: :destroy
   resources :attempts, only: :show

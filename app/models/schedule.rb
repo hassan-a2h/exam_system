@@ -27,9 +27,9 @@ class Schedule < ApplicationRecord
     #   errors.add(:start_time, 'start time can not be in past')
     # els
     if end_time < current_time
-      errors.add(:start_time, 'end time can not be in past')
+      errors.add(:end_time, 'end time can not be in past')
     elsif start_time > end_time
-      errors.add(:start_time, 'end time can\'t be before start time')
+      errors.add(:end_time, 'end time can\'t be before start time')
     end
   end
 end

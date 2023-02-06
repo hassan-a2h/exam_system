@@ -1,7 +1,7 @@
 <h1> Attempt Exam </h1>
 
 <% if @result&.errors&.any? %>
-  <% @result.errors.full_messages do |error| %>
+  <% @result.errors.full_messages.each do |error| %>
     <p class='alert alert-danger'> <%= error %> </p>
   <% end %>
 <% end %>
@@ -12,40 +12,23 @@
   <%= f.hidden_field :exam_id, value: @schedule.exam_id %>
   <%= f.hidden_field :total_marks, value: @exam.marks %>
 
-  <h3> MCQs </h3>
+  <% if @exam.mcqs.any? %>
+    <h3> MCQs </h3>
+  <% end %>
+
   <% counter = 1 %>
   <% @exam.mcqs.each do |mcq| %>
-    <p class='alert alert-secondary'> Question#<%= counter %>. <%= mcq.question %> </p>
-    <p>1. <%= mcq.option1 %> </p>
-    <p>2. <%= mcq.option2 %> </p>
-    <p>3. <%= mcq.option3 %> </p>
-    <p>4. <%= mcq.option4 %> </p>
-
-    <div class='mcq_answer'>
-      <%= f.fields_for :mcq_answers do |mcq_answer| %>
-        <%= mcq_answer.hidden_field :mcq_id, value: mcq.id %>
-        <%= render 'mcq_answer', f: mcq_answer %>
-      <% end %>
-    </div>
-    <br>
+    <%= render 'mcq', mcq: mcq, counter: counter, f: f %>
     <% counter += 1 %>
   <% end %>
 
-  <h3> Fill in the Blanks </h3>
+  <% if @exam.blanks.any? %>
+    <h3> Fill in the Blanks </h3>
+  <% end %>
+
   <% counter = 1 %>
   <% @exam.blanks.each do |blank| %>
-    <p class='alert alert-secondary p-without-newline'> Question#<%= counter %>. </p>
-    <p class='p-without-newline'>
-      <%= blank&.text_before %>
-      <div class='blank_answer p-without-newline'>
-        <%= f.fields_for :blank_answers do |blank_answer| %>
-          <%= blank_answer.hidden_field :blank_id, value: blank.id %>
-          <%= render 'blank_answer', f: blank_answer %>
-        <% end %>
-      </div>
-      <%= blank&.text_after %>
-    </p>
-    <br>
+    <%= render 'blank', blank: blank, counter: counter, f: f %>
     <% counter += 1 %>
   <% end %>
 

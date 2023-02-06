@@ -1,0 +1,12 @@
+<p class='alert alert-secondary p-without-newline m-1'> Question#<%= counter %>. </p>
+<p class='p-without-newline'>
+  <%= blank&.text_before %>
+  <div class='blank_answer p-without-newline'>
+    <%= f.fields_for :blank_answers do |blank_answer| %>
+      <%= blank_answer.hidden_field :blank_id, value: blank.id %>
+      <%= render 'blank_answer', f: blank_answer %>
+    <% end %>
+  </div>
+  <%= blank&.text_after %>
+  [ <%= blank.marks%> ]
+</p>

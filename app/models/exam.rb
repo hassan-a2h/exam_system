@@ -9,14 +9,13 @@ class Exam < ApplicationRecord
   belongs_to :subject
   has_many :schedules, dependent: :destroy
   has_many :results, dependent: :destroy
-
   has_many :mcqs, dependent: :destroy
-  accepts_nested_attributes_for :mcqs, allow_destroy: true, reject_if: :check_mcqs
+  accepts_nested_attributes_for :mcqs, allow_destroy: true
   has_many :blanks, dependent: :destroy
-  accepts_nested_attributes_for :blanks, allow_destroy: true, reject_if: :check_blanks
+  accepts_nested_attributes_for :blanks, allow_destroy: true
 
   validates :title, presence: true
-  validate :associated_attributes
+  validate :empty_exam
 
   enum status: {
     uncertain: 0,
@@ -28,27 +27,15 @@ class Exam < ApplicationRecord
 
   private
 
-  def check_blanks
-    false
-  end
-
-  def check_mcqs
-    false
-  end
-
   def calculate_total_marks
     self.marks = 0
-    mcqs.each do |mcq|
-      self.marks += mcq.marks
-    end
 
-    blanks.each do |blank|
-      self.marks += blank.marks
-    end
+    mcqs.map { |mcq| self.marks += mcq.marks }
+    blanks.map{ |blank| self.marks += blank.marks }
   end
 
-  def associated_attributes
-    return unless mcqs.blank? && blanks.blank?
+  def empty_exam
+    return unless (mcqs.blank? && blanks.blank?)
 
     errors.add(:base, 'An exam needs to have at least one question')
   end

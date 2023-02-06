@@ -17,4 +17,8 @@ class ResultPolicy < ApplicationPolicy
   def index?
     user
   end
+
+  def create?
+    user.Student? && record.end_time > DateTime.now
+  end
 end

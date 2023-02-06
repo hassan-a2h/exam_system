@@ -1,7 +1,7 @@
 <h1> Create Exam </h1>
 
 <% if @exam.errors.any? %>
-  <% @exam.errors.full_messages do |error| %>
+  <% @exam.errors.full_messages.each do |error| %>
     <p class='alert alert-danger'> <%= error %> </p>
   <% end %>
 <% end %>

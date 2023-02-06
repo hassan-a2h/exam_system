@@ -18,7 +18,7 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def new?
-    user.Teacher? && !record.blank?
+    user.Teacher? && !(Exam.by_teacher(user.id).blank?)
   end
 
   def destroy?
