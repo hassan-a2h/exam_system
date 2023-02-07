@@ -23,9 +23,7 @@ class Schedule < ApplicationRecord
 
   def start_and_end_time
     current_time = DateTime.now
-    # if start_time < current_time
-    #   errors.add(:start_time, 'start time can not be in past')
-    # els
+
     if end_time < current_time
       errors.add(:end_time, 'end time can not be in past')
     elsif start_time > end_time

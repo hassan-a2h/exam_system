@@ -1,33 +1,43 @@
 <% if current_user.Teacher? %>
   <%= link_to 'Add Exam', new_exam_path, class: 'btn btn-primary mt-2' %>
-<% elsif current_user.Admin? %>
-  <%= link_to 'Approvals', approve_exams_path, class: 'btn btn-primary mt-2' %>
 <% end %>
 
 <% if @exams.blank? %>
   <p> No exams found </p>
-<% end %>
-
-<% @exams.each do |exam| %>
-  <div class="card m-2">
-    <h5 class="card-header"> <%= exam.subject.name %> </h5>
-    <div class="card-body">
-      <h5 class="card-title"> <%= exam.title %></h5>
-      <table>
-        <tr>
-          <th> MCQs </th>
-          <th> Fill in the blanks </th>
-          <th> Status </th>
-        </tr>
-        <tr>
-          <td> <%= exam.mcqs.count %> </td>
-          <td> <%= exam.blanks.count %> </td>
-          <td> <%= exam.status %> </td>
-        </tr>
-      </table>
-      <%= link_to 'Update', edit_exam_path(exam), class: 'btn btn-secondary m-2' %>
-      <%= link_to 'Remove', exam_path(exam),
-       data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger m-2' %>
-    </div>
-  </div>
+<% else %>
+<table>
+  <tr>
+    <th> Id </th>
+    <th> Subject </th>
+    <th> Title </th>
+    <th> MCQs </th>
+    <th> Fill in the blanks </th>
+    <th> Action </th>
+    <th> Action </th>
+  </tr>
+  <% @exams.each do |exam| %>
+    <tr>
+      <td> <%= exam.id %> </td>
+      <td> <%= exam.subject.name %> </td>
+      <td> <%= link_to "#{exam.title}", exam_path(exam) %> </td>
+      <td> <%= exam.mcqs.count %> </td>
+      <td> <%= exam.blanks.count %> </td>
+      <td>
+        <% if exam.uncertain? %>
+          <%= link_to 'Approve', exam_path(exam, exam: {status: :approved}), method: :patch, class: 'btn btn-info m-2' %>
+          <%= link_to 'Reject', exam_path(exam, exam: {status: :rejected}), method: :patch, class: 'btn btn-danger m-2' %>
+        <% else %>
+          <p> <%= exam.status %> </p>
+        <% end %>
+      </td>
+      <td>
+        <% if current_user.Teacher? %>
+          <%= link_to 'Update', edit_exam_path(exam), class: 'btn btn-secondary m-2' %>
+        <% end %>
+        <%= link_to 'Remove', exam_path(exam),
+        data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger m-2' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 <% end %>

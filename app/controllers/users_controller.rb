@@ -2,18 +2,16 @@
 
 class UsersController < ApplicationController
   def index
-    @users = User.all.order(:created_at)
+    @users = User.where('id != ?', current_user.id).order(:created_at)
     authorize @users
   end
 
   def edit
-    @user = User.find(current_user.id)
+    @user = current_user
   end
 
   def update
-    @user = User.find(current_user.id)
-
-    if @user.update(user_params)
+    if current_user.update(user_params)
       redirect_to root_path, notice: 'Profile Updated'
     else
       redirect_to root_path, alert: 'Error! could not update profile'

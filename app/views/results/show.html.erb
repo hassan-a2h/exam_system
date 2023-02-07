@@ -13,43 +13,39 @@
 </table>
 <hr>
 
-<% i = 0 %>
-<% while i < @exam&.mcqs&.count %>
-  <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= @exam.mcqs[i].question %> </p>
-  <p>1. <%= @exam.mcqs[i].option1 %> </p>
-  <p>2. <%= @exam.mcqs[i].option2 %> </p>
-  <p>3. <%= @exam.mcqs[i].option3 %> </p>
-  <p>4. <%= @exam.mcqs[i].option4 %> </p>
+<% @exam&.mcqs&.each_with_index do |mcq, i| %>
+  <p class='alert alert-secondary'> Question#<%= i + 1 %>. <%= mcq.question %> </p>
+  <p>1. <%= mcq.option1 %> </p>
+  <p>2. <%= mcq.option2 %> </p>
+  <p>3. <%= mcq.option3 %> </p>
+  <p>4. <%= mcq.option4 %> </p>
 
-  <% if @exam.mcqs[i].correct_option != @result.mcq_answers[i].answer%>
+  <% if mcq.correct_option != @result.mcq_answers[i].answer%>
     <p class='alert alert-danger'> Selected: <%= @result.mcq_answers[i].answer %> </p>
-    <p class='alert alert-primary'> Correct: <%= @exam.mcqs[i].correct_option %> </p>
+    <p class='alert alert-primary'> Correct: <%= mcq.correct_option %> </p>
   <% else %>
     <p class='alert alert-success'> Correct: <%= @result.mcq_answers[i].answer %> </p>
   <% end %>
 
   <hr>
-  <% i += 1 %>
 <% end %>
 
 <% unless @exam.blanks.blank? %>
   <h1> Fill in the blanks </h1>
 <% end %>
 
-<% i = 0 %>
-<% while i < @exam&.blanks&.count %>
+<% @exam&.blanks&.each_with_index do |blank, i| %>
   <p class='alert alert-secondary p-without-newline'> Question#<%= i + 1 %>. </p>
-  <p class='p-without-newline'> <%= @exam.blanks[i]&.text_before %> </p>
+  <p class='p-without-newline'> <%= blank&.text_before %> </p>
   <p class='alert alert-secondary p-without-newline'> </p>
-  <p class='p-without-newline'> <%= @exam.blanks[i]&.text_after %> </p>
+  <p class='p-without-newline'> <%= blank&.text_after %> </p>
 
-  <% if @exam.blanks[i].answer.downcase != @result.blank_answers[i].answer.downcase %>
+  <% if blank.answer.downcase != @result.blank_answers[i].answer.downcase %>
     <p class='alert alert-danger'> Answered: <%= @result.blank_answers[i].answer %> </p>
-    <p class='alert alert-primary'> Correct: <%= @exam.blanks[i].answer %> </p>
+    <p class='alert alert-primary'> Correct: <%= blank.answer %> </p>
   <% else %>
-    <p class='alert alert-success'> Correct: <%= @exam.blanks[i].answer %> </p>
+    <p class='alert alert-success'> Correct: <%= blank.answer %> </p>
   <% end %>
 
   <hr>
-  <% i += 1 %>
 <% end %>

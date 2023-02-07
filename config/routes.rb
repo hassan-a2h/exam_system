@@ -11,23 +11,8 @@ Rails.application.routes.draw do
     resources :subjects, except: :show
   end
 
-  resources :exams do
-    collection do
-      get :approve
-    end
-
-    member do
-      post :accept
-      post :reject
-    end
-  end
-  resources :schedules do
-    member do
-      post :accept
-      post :reject
-    end
-  end
-
+  resources :exams
+  resources :schedules
   resources :results, only: [:index, :show, :create]
   resources :mcqs, only: :destroy
   resources :blanks, only: :destroy

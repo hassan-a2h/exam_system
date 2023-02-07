@@ -2,19 +2,15 @@
   <h3> MCQs </h3>
 <% end %>
 
-<% i = 0 %>
-<% while i < @exam&.mcqs&.count %>
-  <%= render 'mcq', mcq: @exam.mcqs[i], counter: i + 1 %>
-  <% i += 1 %>
+<% @exam&.mcqs&.each_with_index do |mcq, i| %>
+  <%= render 'mcq', mcq: mcq, counter: i + 1 %>
 <% end %>
 
 <% unless @exam.blanks.blank? %>
   <h3 class='mb-3'> Fill in the blanks </h3>
 <% end %>
 
-<% i = 0 %>
-<% while i < @exam&.blanks&.count %>
-  <%= render 'blank', blank: @exam&.blanks[i], counter: i + 1 %>
+<% @exam&.blanks&.each_with_index do |blank, i| %>
+  <%= render 'blank', blank: blank, counter: i + 1 %>
   <hr>
-  <% i += 1 %>
 <% end %>

@@ -12,15 +12,6 @@
   </tr>
 
   <% @users.each do |user| %>
-    <tr>
-      <% if user.id == current_user.id %>
-        <% next %>
-      <% end %>
-      <td> <p> <%= user.id %> </p> </td>
-      <td> <p> <%= user.name %> </p> </td>
-      <td> <p> <%= user.type %> </p> </td>
-      <td> <p> <%= user.email %> </p> </td>
-      <td> <p> <%= link_to 'Delete', user_path(user), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %> </p> </td>
-    </tr>
+      <%= render 'user', user: user %>
   <% end %>
 </table>

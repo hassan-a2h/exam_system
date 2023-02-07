@@ -10,8 +10,8 @@ class Exam < ApplicationRecord
   has_many :schedules, dependent: :destroy
   has_many :results, dependent: :destroy
   has_many :mcqs, dependent: :destroy
-  accepts_nested_attributes_for :mcqs, allow_destroy: true
   has_many :blanks, dependent: :destroy
+  accepts_nested_attributes_for :mcqs, allow_destroy: true
   accepts_nested_attributes_for :blanks, allow_destroy: true
 
   validates :title, presence: true
@@ -31,11 +31,11 @@ class Exam < ApplicationRecord
     self.marks = 0
 
     mcqs.map { |mcq| self.marks += mcq.marks }
-    blanks.map{ |blank| self.marks += blank.marks }
+    blanks.map { |blank| self.marks += blank.marks }
   end
 
   def empty_exam
-    return unless (mcqs.blank? && blanks.blank?)
+    return unless mcqs.blank? && blanks.blank?
 
     errors.add(:base, 'An exam needs to have at least one question')
   end

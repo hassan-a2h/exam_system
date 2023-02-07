@@ -26,8 +26,8 @@
         <% unless current_user.Student? %>
           <td>
             <% if current_user.Admin? && schedule.status == 'pending' %>
-              <%= link_to 'Approve', accept_schedule_path(schedule), method: :post, class: 'btn btn-success m-1' %>
-              <%= link_to 'Reject', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
+              <%= link_to 'Approve', schedule_path(schedule, schedule: {status: :approved}), method: :patch, class: 'btn btn-success m-1' %>
+              <%= link_to 'Reject', schedule_path(schedule, schedule: {status: :rejected}), method: :patch, class: 'btn btn-secondary m-1' %>
             <% elsif current_user.Admin? && schedule.status == 'approved' && DateTime.now < schedule.start_time %>
               <%= link_to 'Cancel', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
             <% else %>
@@ -36,13 +36,7 @@
           </td>
         <% end %>
         <td>
-          <% if DateTime.now > schedule.end_time %>
-            <p> Conducted </p>
-          <% elsif DateTime.now < schedule.start_time %>
-            <p> Scheduled </p>
-          <% else %>
-            <p> Taking Place </p>
-          <% end %>
+          <p> <%= exam_time_passed_status(schedule) %> </p>
         </td>
         <% unless current_user.Student? %>
           <td>
@@ -51,7 +45,7 @@
         <% end %>
 
         <% if current_user.Student? %>
-          <% if current_user.Student? && DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
+          <% if DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
             <td> <p> <%= link_to 'Attempt', attempt_path(schedule), class: 'btn btn-primary' %> </p> </td>
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', exam_path(schedule.exam_id), class: 'btn btn-primary' %> </p> </td>

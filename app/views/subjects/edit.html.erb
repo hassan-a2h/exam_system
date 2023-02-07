@@ -11,7 +11,7 @@
   <%= f.label :name %> <br>
   <%= f.text_field :name %> <br>
   <%= f.label :teacher %> <br>
-  <%= f.select :teacher_id, @teachers.map {|teacher| [teacher.name, teacher.id]} %> <br>
+  <%= f.select :teacher_id, set_teachers %> <br>
 
   <br>
   <%= f.submit %>

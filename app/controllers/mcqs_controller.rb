@@ -19,8 +19,8 @@ class McqsController < ApplicationController
     @mcq = Mcq.find(params[:id])
     @exam = Exam.find(@mcq.exam_id)
 
-    if total_questions(@exam) == 1
-      redirect_to edit_exam_path(@exam), alert: 'Exam needs to have at least one question'
-    end
+    return unless total_questions(@exam) == 1
+
+    redirect_to edit_exam_path(@exam), alert: 'Exam needs to have at least one question'
   end
 end

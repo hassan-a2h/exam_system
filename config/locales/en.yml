@@ -55,7 +55,7 @@ en:
     schedule_policy:
       index?: 'User must be logged in'
       new?: 'Exams must exist (Teacher only)'
-      accept?: 'Only Admin can approve a Schedule'
+      update?: 'Only Admin can approve/reject a Schedule'
       destroy?: 'Action not allowed (Only Admin and Teacher can remove Schedule)'
 
     subject_policy:

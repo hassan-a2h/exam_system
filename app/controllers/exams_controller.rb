@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
-  before_action :set_exam, except: %i[index new create approve]
+  before_action :set_exam, except: %i[index new create]
 
   include Setter::ExamSetter
 
@@ -38,7 +38,7 @@ class ExamsController < ApplicationController
   end
 
   def update
-    authorize @exam, :create?
+    authorize @exam
 
     if @exam.update(exam_params)
       redirect_to root_path, notice: 'Exam updated'
@@ -57,33 +57,10 @@ class ExamsController < ApplicationController
     end
   end
 
-  def approve
-    @exams = Exam.where(status: :uncertain)
-    authorize @exams
-  end
-
-  def accept
-    authorize @exam, :approve?
-    if @exam.approved!
-      redirect_to root_path, notice: 'Exam approved'
-    else
-      redirect_to root_path, alert: 'Error! could not approve exam'
-    end
-  end
-
-  def reject
-    authorize @exam, :approve?
-    if @exam.rejected!
-      redirect_to root_path, notice: 'Exam rejected'
-    else
-      redirect_to root_path, alert: 'Error! could not reject exam'
-    end
-  end
-
   private
 
   def exam_params
-    params.require(:exam).permit(:teacher_id, :subject_id, :title,
+    params.require(:exam).permit(:teacher_id, :subject_id, :title, :status,
                                  mcqs_attributes: Mcq.attribute_names.map(&:to_sym).push(:_destroy),
                                  blanks_attributes: Blank.attribute_names.map(&:to_sym).push(:_destroy))
   end

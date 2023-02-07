@@ -3,7 +3,8 @@
 class SchedulesController < ApplicationController
   include Setter::ScheduleSetter
 
-  before_action :set_schedule, only: %i[destroy accept reject]
+  before_action :set_schedule, only: %i[destroy accept reject update]
+  before_action :set_permission, only: :destroy
 
   def index
     @schedules = policy_scope(Schedule)
@@ -26,9 +27,16 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def destroy
+  def update
     authorize @schedule
+    if @schedule.update(schedule_params)
+      redirect_to schedules_path, notice: 'Schedule Updated'
+    else
+      redirect_to schedules_path, alert: 'Could not approve Schedule'
+    end
+  end
 
+  def destroy
     if @schedule.destroy
       redirect_to root_path, notice: 'Schedule Removed'
     else
@@ -36,29 +44,13 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def accept
-    authorize @schedule
-
-    if @schedule.approved!
-      redirect_to schedules_path, notice: 'Schedule Approved'
-    else
-      redirect_to schedules_path, alert: 'Could not approve Schedule'
-    end
-  end
-
-  def reject
-    authorize @schedule, :accept?
-
-    if @schedule.rejected!
-      redirect_to schedules_path, notice: 'Schedule disapproved'
-    else
-      redirect_to schedules_path, alert: 'Could not reject Schedule'
-    end
-  end
-
   private
 
   def schedule_params
     params.require(:schedule).permit(Schedule.attribute_names.map(&:to_sym))
+  end
+
+  def set_permission
+    authorize @schedule
   end
 end

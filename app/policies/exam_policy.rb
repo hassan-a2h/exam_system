@@ -5,7 +5,7 @@ class ExamPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       if user.Admin?
-        scope.includes(:mcqs, :blanks, :subject).all
+        scope.includes(:mcqs, :blanks, :subject).all.reorder(status: :asc)
       else
         scope.includes(:mcqs, :blanks, :subject).where(teacher_id: user.id)
       end
@@ -26,6 +26,10 @@ class ExamPolicy < ApplicationPolicy
 
   def create?
     user.Teacher?
+  end
+
+  def update?
+    user.Teacher? || user.Admin?
   end
 
   def approve?

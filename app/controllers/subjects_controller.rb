@@ -33,7 +33,6 @@ class SubjectsController < ApplicationController
 
   def edit
     authorize @subject, :index?
-    @teachers = Teacher.all
   end
 
   def update

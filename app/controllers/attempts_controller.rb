@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttemptsController < ApplicationController
-  before_action :initialize_variables
+  before_action :set_result
   before_action :check_previous_result
 
   def show
@@ -12,14 +12,14 @@ class AttemptsController < ApplicationController
 
   private
 
-  def initialize_variables
+  def set_result
     @result = Result.new
     authorize @result, :show?, policy_class: AttemptPolicy
     @schedule = Schedule.includes(:exam).find(params[:id])
   end
 
   def check_previous_result
-    @previous_result = Result.find_by(student_id: current_user.id, schedule_id: @schedule.id)
+    @previous_result = current_user.results.find_by(schedule_id: @schedule.id)
     redirect_to result_path(@previous_result) if @previous_result
   end
 end

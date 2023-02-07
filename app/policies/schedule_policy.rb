@@ -4,7 +4,7 @@ class SchedulePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.Admin?
-        scope.includes(:exam).all
+        scope.includes(:exam).all.reorder(:status)
       elsif user.Teacher?
         scope.includes(:exam).by_teacher(user.id)
       else
@@ -18,7 +18,11 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def new?
-    user.Teacher? && !(Exam.by_teacher(user.id).blank?)
+    user.Teacher? && Exam.by_teacher(user.id).present?
+  end
+
+  def update?
+    user.Admin?
   end
 
   def destroy?
