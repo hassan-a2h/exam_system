@@ -1,4 +1,4 @@
-FROM ruby:2.7.6p219-alpine
+FROM ruby:2.7.6-alpine
 RUN mkdir /home/app
 WORKDIR /home/app
 COPY ./ ./
