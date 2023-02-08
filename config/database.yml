@@ -23,5 +23,10 @@ test:
   database: exam_system_test
 
 production:
-  <<: *default
-  database: exam_system_production
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['PGUSER'] >
+  password: <%= ENV['PGPASSWORD'] >
+  port: <%= ENV['PGPORT'] >
+  timeout: 5000
+  database: <%= ENV['PGDATABASE'] >

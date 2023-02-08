@@ -39,8 +39,8 @@ services:
     environment:
       DB_HOST: db
       DB_NAME: exam_system_db
-      DB_USERNAME: dave_4d
-      DB_PASSWORD: 12345678dd
+      POSTGRES_USER: dave_4d
+      POSTGRES_PASS: 12345678dd
     volumes:
       - .:/app:cached
     ports:
