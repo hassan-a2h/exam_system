@@ -33,7 +33,7 @@ services:
       POSTGRES_PASSWORD: 12345678dd
     ports:
       - "5432:5432"
-  myapp-web:
+  exam-system:
     build: .
     command: "bundle exec rails s -p 3000 -b '0.0.0.0'"
     environment:
