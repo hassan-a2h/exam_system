@@ -40,8 +40,8 @@ class ResultsController < ApplicationController
       @marks += mcq.marks if student_answers.mcq_answers[i].answer == mcq.correct_option
     end
 
-    @exam&.blanks&.each_with_index do |blank, i|
-      @marks += blank.marks if student_answers.blank_answers[i].answer.casecmp(blank.answer).zero?
+    exam&.blanks&.each_with_index do |blank, i|
+      @marks += blank.marks if student_answers.blank_answers[i].answer.downcase == blank.answer.downcase
     end
 
     @marks

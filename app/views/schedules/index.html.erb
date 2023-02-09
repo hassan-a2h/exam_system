@@ -1,5 +1,5 @@
 <% if current_user.Teacher? %>
-  <%= link_to 'Create Schedule', new_schedule_path, class: 'btn btn-primary mt-2' %>
+  <%= link_to 'Create Schedule', new_schedule_path, class: 'btn btn-primary m2' %>
 <% end %>
 <h1>Exam Schedules</h1>
 
@@ -29,7 +29,7 @@
               <%= link_to 'Approve', schedule_path(schedule, schedule: {status: :approved}), method: :patch, class: 'btn btn-success m-1' %>
               <%= link_to 'Reject', schedule_path(schedule, schedule: {status: :rejected}), method: :patch, class: 'btn btn-secondary m-1' %>
             <% elsif current_user.Admin? && schedule.status == 'approved' && DateTime.now < schedule.start_time %>
-              <%= link_to 'Cancel', reject_schedule_path(schedule), method: :post, class: 'btn btn-secondary m-1' %>
+              <%= link_to 'Cancel', schedule_path(schedule, schedule: {status: :rejected}), method: :patch, class: 'btn btn-secondary m-1' %>
             <% else %>
               <p> <%= schedule.status %> </p>
             <% end %>
@@ -50,7 +50,7 @@
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', exam_path(schedule.exam_id), class: 'btn btn-primary' %> </p> </td>
           <% else %>
-            <td> <p> <%= link_to 'Attempt', class: 'btn btn-secondary disabled' %> </p> </td>
+            <td> <p> <%= link_to 'Attempt', class: 'btn btn-primary disabled' %> </p> </td>
           <% end %>
         <% end %>
       </tr>

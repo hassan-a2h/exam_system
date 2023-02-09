@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     if current_user.update(user_params)
       redirect_to root_path, notice: 'Profile Updated'
     else
-      redirect_to root_path, alert: 'Error! could not update profile'
+      render :edit
     end
   end
 

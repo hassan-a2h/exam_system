@@ -1,7 +1,8 @@
 # frozen_string_literal: true
-
 class BlanksController < ApplicationController
   before_action :check_empty_exam, only: :destroy
+
+  include Question
 
   def destroy
     if @blank.destroy
