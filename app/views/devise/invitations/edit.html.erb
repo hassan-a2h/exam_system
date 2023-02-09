@@ -6,11 +6,6 @@
 
   <% if f.object.class.require_password_on_accepting %>
 
-    <% if resource.Student? %>
-      <%= f.label :picture %>
-      <%= f.file_field :picture %>
-    <% end %>
-
     <div class="field">
       <%= f.label :password %><br />
       <%= f.password_field :password %>
