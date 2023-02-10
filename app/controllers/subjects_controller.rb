@@ -16,8 +16,8 @@ class SubjectsController < ApplicationController
 
   def new
     @subject = Subject.new
-    authorize @subject, :index?
     @teachers = Teacher.all
+    authorize @teachers, :new?, policy_class: SubjectPolicy
   end
 
   def create
@@ -39,7 +39,7 @@ class SubjectsController < ApplicationController
     authorize @subject, :index?
 
     if @subject.update(subject_params)
-      redirect_to root_path, notice: 'Subject updated'
+      redirect_to admin_subjects_path(current_user), notice: 'Subject updated'
     else
       render :edit
     end
@@ -49,7 +49,7 @@ class SubjectsController < ApplicationController
     authorize @subject, :index?
 
     if @subject.destroy
-      redirect_to root_path, notice: 'Subject deleted'
+      redirect_to admin_subjects_path(current_user), notice: 'Subject deleted'
     else
       redirect_to root_path, alert: 'Error! could not delete subject'
     end

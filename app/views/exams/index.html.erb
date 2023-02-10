@@ -1,4 +1,4 @@
-<% if current_user.Teacher? %>
+<% if current_user.Teacher? && subjects_for_teacher %>
   <%= link_to 'Add Exam', new_exam_path, class: 'btn btn-primary m-2' %>
 <% end %>
 
@@ -23,7 +23,7 @@
       <td> <%= exam.mcqs.count %> </td>
       <td> <%= exam.blanks.count %> </td>
       <td>
-        <% if exam.uncertain? %>
+        <% if exam.uncertain? && current_user.Admin? %>
           <%= link_to 'Approve', exam_path(exam, exam: {status: :approved}), method: :patch, class: 'btn btn-info m-2' %>
           <%= link_to 'Reject', exam_path(exam, exam: {status: :rejected}), method: :patch, class: 'btn btn-danger m-2' %>
         <% else %>

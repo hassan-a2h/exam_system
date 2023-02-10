@@ -20,6 +20,6 @@ class AttemptsController < ApplicationController
   def check_previous_result
     @previous_result = current_user.results.find_by(schedule_id: @schedule.id)
     redirect_to result_path(@previous_result) if @previous_result
-    authorize @previous_result, :show?, policy_class: AttemptPolicy
+    authorize @schedule, :show?, policy_class: AttemptPolicy
   end
 end

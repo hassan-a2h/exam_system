@@ -18,4 +18,12 @@ module ScheduleHelper
       'Taking Place'
     end
   end
+
+  def no_result(schedule)
+    !Result.find_by(student_id: current_user.id, schedule_id: schedule.id)
+  end
+
+  def check_available_exams
+    Exam.find_by(teacher_id: current_user.id)
+  end
 end

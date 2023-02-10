@@ -6,4 +6,8 @@
   [ <%= blank.marks%> ]
 </p>
 
+<% unless current_user.Student? %>
+  <p class='alert alert-success m-2'> Answer: <%= blank.answer %> </p>
+<% end %>
+
 <hr>

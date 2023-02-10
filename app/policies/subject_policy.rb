@@ -8,6 +8,10 @@ class SubjectPolicy < ApplicationPolicy
     # end
   end
 
+  def new?
+    user.Admin? && record.present?
+  end
+
   def index?
     user.Admin?
   end

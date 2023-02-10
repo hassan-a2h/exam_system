@@ -9,6 +9,6 @@ class AttemptPolicy < ApplicationPolicy
   end
 
   def show?
-    user.Student?
+    user.Student? && record.start_time <= DateTime.now && record.end_time > DateTime.now
   end
 end

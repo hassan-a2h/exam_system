@@ -1,4 +1,4 @@
-<% if current_user.Teacher? %>
+<% if current_user.Teacher? && check_available_exams %>
   <%= link_to 'Create Schedule', new_schedule_path, class: 'btn btn-primary m2' %>
 <% end %>
 <h1>Exam Schedules</h1>
@@ -45,12 +45,12 @@
         <% end %>
 
         <% if current_user.Student? %>
-          <% if DateTime.now > schedule.start_time && DateTime.now < schedule.end_time %>
+          <% if DateTime.now > schedule.start_time && DateTime.now < schedule.end_time && no_result(schedule) %>
             <td> <p> <%= link_to 'Attempt', attempt_path(schedule), class: 'btn btn-primary' %> </p> </td>
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', exam_path(schedule.exam_id), class: 'btn btn-primary' %> </p> </td>
           <% else %>
-            <td> <p> <%= link_to 'Attempt', class: 'btn btn-primary disabled' %> </p> </td>
+            <td> <p> <%= link_to 'Attempt',  class: 'btn btn-info disabled' %> </p> </td>
           <% end %>
         <% end %>
       </tr>

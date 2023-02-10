@@ -18,6 +18,17 @@ class ResultPolicy < ApplicationPolicy
     user
   end
 
+  def show?
+    if user.Student?
+      record.student_id == user.id
+    elsif user.Teacher?
+      exam = Exam.find(record.exam_id)
+      exam.teacher_id == user.id
+    else
+      user
+    end
+  end
+
   def create?
     user.Student? && record.end_time > DateTime.now
   end

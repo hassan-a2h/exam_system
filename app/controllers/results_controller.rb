@@ -9,6 +9,7 @@ class ResultsController < ApplicationController
   def show
     @result = Result.includes(:mcq_answers, :blank_answers).find(params[:id])
     @exam = Exam.includes(:mcqs, :blanks).find(@result.exam_id)
+    authorize @result
   end
 
   def create
@@ -41,7 +42,7 @@ class ResultsController < ApplicationController
     end
 
     exam&.blanks&.each_with_index do |blank, i|
-      @marks += blank.marks if student_answers.blank_answers[i].answer.downcase == blank.answer.downcase
+      @marks += blank.marks if student_answers.blank_answers[i].answer.casecmp(blank.answer).zero?
     end
 
     @marks

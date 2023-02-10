@@ -3,6 +3,7 @@
 module Users
   class InvitationsController < Devise::InvitationsController
     before_action :configure_permitted_params
+    skip_before_action :authenticate_user!, only: %i[edit update]
 
     def policy_class
       InvitationPolicy

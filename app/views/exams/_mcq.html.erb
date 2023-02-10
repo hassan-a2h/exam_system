@@ -4,4 +4,7 @@
 <p>3. <%= mcq.option3 %> </p>
 <p>4. <%= mcq.option4 %> </p>
 
+<% unless current_user.Student? %>
+  <p class='alert alert-success m-2'> Option <%= mcq.correct_option %> </p>
+<% end %>
 <hr>

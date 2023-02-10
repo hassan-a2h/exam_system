@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
-  before_action :set_exam, except: %i[index new create]
-
   include Setter::ExamSetter
+
+  before_action :set_exam, except: %i[index new create]
 
   def index
     @exams = policy_scope(Exam)
@@ -34,7 +34,12 @@ class ExamsController < ApplicationController
   end
 
   def edit
-    authorize @exam, :create?
+    authorize @exam
+
+    @schedule = Schedule.find_by(exam_id: @exam)
+    if @schedule.present? && @schedule.end_time > DateTime.now
+      redirect_to exams_path, alert: 'Can not edit scheduled exam'
+    end
   end
 
   def update
@@ -48,7 +53,7 @@ class ExamsController < ApplicationController
   end
 
   def destroy
-    authorize @exam, :index?
+    authorize @exam
 
     if @exam.destroy
       redirect_to root_path, notice: 'Exam removed'

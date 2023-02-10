@@ -26,10 +26,6 @@ class SchedulePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.Teacher? || user.Admin?
-  end
-
-  def accept?
-    user.Admin?
+    user.Admin? || (user.Teacher? && record.teacher_id == user.id)
   end
 end

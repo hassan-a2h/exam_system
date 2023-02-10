@@ -17,7 +17,11 @@ class ExamPolicy < ApplicationPolicy
   end
 
   def show?
-    user
+    if user.Teacher?
+      record.teacher_id == user.id
+    else
+      user
+    end
   end
 
   def new?
@@ -28,11 +32,21 @@ class ExamPolicy < ApplicationPolicy
     user.Teacher?
   end
 
+  def edit?
+    user.Teacher? && record.teacher_id == user.id
+  end
+
   def update?
     user.Teacher? || user.Admin?
   end
 
-  def approve?
-    user.Admin?
+  def destroy?
+    if user.Teacher?
+      user.Teacher? && record.teacher_id == user.id
+    elsif user.Admin?
+      true
+    else
+      false
+    end
   end
 end
