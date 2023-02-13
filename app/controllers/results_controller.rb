@@ -37,14 +37,20 @@ class ResultsController < ApplicationController
   def calculate_obtained_marks(student_answers, exam)
     @marks = 0
 
+    mcqs_obtained_marks(student_answers, exam)
+    blanks_obtained_marks(student_answers, exam)
+    @marks
+  end
+
+  def mcqs_obtained_marks(student_answers, exam)
     exam&.mcqs&.each_with_index do |mcq, i|
       @marks += mcq.marks if student_answers.mcq_answers[i].answer == mcq.correct_option
     end
+  end
 
+  def blanks_obtained_marks(student_answers, exam)
     exam&.blanks&.each_with_index do |blank, i|
       @marks += blank.marks if student_answers.blank_answers[i].answer.casecmp(blank.answer).zero?
     end
-
-    @marks
   end
 end

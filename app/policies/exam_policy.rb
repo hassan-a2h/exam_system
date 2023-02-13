@@ -29,7 +29,7 @@ class ExamPolicy < ApplicationPolicy
   end
 
   def create?
-    user.Teacher?
+    user.Teacher? && (record.teacher_id == user.id)
   end
 
   def edit?

@@ -2,7 +2,7 @@
 
 module ExamHelper
   def subjects_list
-    Subject.all.map { |subject| [subject.name, subject.id] }
+    Subject.where(teacher_id: current_user.id).map { |subject| [subject.name, subject.id] }
   end
 
   def subjects_for_teacher

@@ -3,7 +3,7 @@
 class SchedulesController < ApplicationController
   include Setter::ScheduleSetter
 
-  before_action :set_schedule, only: %i[destroy accept reject update]
+  before_action :set_schedule, only: %i[destroy update]
   before_action :set_permission, only: :destroy
 
   def index

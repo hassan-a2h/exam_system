@@ -12,12 +12,16 @@ Rails.application.routes.draw do
   end
 
   resources :exams
-  resources :schedules
+  resources :schedules, except: [:show, :edit]
   resources :results, only: [:index, :show, :create]
   resources :mcqs, only: :destroy
   resources :blanks, only: :destroy
   resources :attempts, only: :show
-  resource :dashboard, only: [:show]
+  resource :dashboard, only: [:show, :new]
 
   root 'dashboards#show'
+
+  get '*all', to: 'dashboards#new', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 end

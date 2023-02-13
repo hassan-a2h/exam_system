@@ -24,7 +24,8 @@ class ExamsController < ApplicationController
 
   def create
     @exam = Exam.new(exam_params)
-    authorize @exam
+    @subject = @exam.subject
+    authorize @subject, policy_class: ExamPolicy
 
     if @exam.save
       redirect_to root_path, notice: 'Exam Created (Approval Pending)'
@@ -37,9 +38,9 @@ class ExamsController < ApplicationController
     authorize @exam
 
     @schedule = Schedule.find_by(exam_id: @exam)
-    if @schedule.present? && @schedule.end_time > DateTime.now
-      redirect_to exams_path, alert: 'Can not edit scheduled exam'
-    end
+    return unless @schedule.present? && @schedule.end_time > DateTime.now
+
+    redirect_to exams_path, alert: 'Can not edit scheduled exam'
   end
 
   def update
