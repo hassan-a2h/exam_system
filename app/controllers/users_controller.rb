@@ -23,9 +23,9 @@ class UsersController < ApplicationController
     authorize @user, :index?, policy_class: UserPolicy
 
     if @user.destroy
-      redirect_to root_path, notice: 'User Removed'
+      redirect_to users_path, notice: 'User Removed'
     else
-      redirect_to root_path, alert: 'Error! could not remove user'
+      redirect_to users_path, alert: 'Error! could not remove user'
     end
   end
 
