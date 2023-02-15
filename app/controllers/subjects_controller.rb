@@ -25,7 +25,7 @@ class SubjectsController < ApplicationController
     authorize @subject, :index?
 
     if @subject.save
-      redirect_to root_path, notice: 'Subject Added'
+      redirect_to admin_subjects_path(current_user), notice: 'Subject Added'
     else
       render :new
     end
@@ -51,7 +51,7 @@ class SubjectsController < ApplicationController
     if @subject.destroy
       redirect_to admin_subjects_path(current_user), notice: 'Subject deleted'
     else
-      redirect_to root_path, alert: 'Error! could not delete subject'
+      redirect_to admin_subjects_path(current_user), alert: 'Error! could not delete subject'
     end
   end
 

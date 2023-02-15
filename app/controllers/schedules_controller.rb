@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
     authorize @schedule, :new?
 
     if @schedule.save
-      redirect_to root_path, notice: 'Exam Scheduled (Approval Pending)'
+      redirect_to schedules_path, notice: 'Exam Scheduled (Approval Pending)'
     else
       render :new
     end
@@ -38,9 +38,9 @@ class SchedulesController < ApplicationController
 
   def destroy
     if @schedule.destroy
-      redirect_to root_path, notice: 'Schedule Removed'
+      redirect_to schedules_path, notice: 'Schedule Removed'
     else
-      redirect_to root_path, alert: 'Coul not remove Schedule'
+      redirect_to schedules_path, alert: 'Coul not remove Schedule'
     end
   end
 

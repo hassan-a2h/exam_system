@@ -6,7 +6,7 @@ class SchedulePolicy < ApplicationPolicy
       if user.Admin?
         scope.includes(:exam).all.reorder(:status)
       elsif user.Teacher?
-        scope.includes(:exam).by_teacher(user.id)
+        scope.includes(:exam).active_exams.by_teacher(user.id)
       else
         scope.includes(:exam)
       end

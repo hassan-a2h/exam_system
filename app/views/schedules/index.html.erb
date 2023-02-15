@@ -50,7 +50,7 @@
           <% elsif DateTime.now > schedule.end_time %>
             <td> <p> <%= link_to 'View', exam_path(schedule.exam_id), class: 'btn btn-primary' %> </p> </td>
           <% else %>
-            <td> <p> <%= link_to 'Attempt',  class: 'btn btn-info disabled' %> </p> </td>
+            <td> <p> Attempted </p> </td>
           <% end %>
         <% end %>
       </tr>

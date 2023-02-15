@@ -28,7 +28,7 @@ class ExamsController < ApplicationController
     authorize @subject, policy_class: ExamPolicy
 
     if @exam.save
-      redirect_to root_path, notice: 'Exam Created (Approval Pending)'
+      redirect_to exams_path, notice: 'Exam Created (Approval Pending)'
     else
       render :new
     end
@@ -47,9 +47,9 @@ class ExamsController < ApplicationController
     authorize @exam
 
     if @exam.update(exam_params)
-      redirect_to root_path, notice: 'Exam updated'
+      redirect_to exams_path, notice: 'Exam updated'
     else
-      redirect_to root_path, alert: 'Error! could not update'
+      redirect_to exams_path, alert: 'Error! could not update'
     end
   end
 
@@ -57,9 +57,9 @@ class ExamsController < ApplicationController
     authorize @exam
 
     if @exam.destroy
-      redirect_to root_path, notice: 'Exam removed'
+      redirect_to exams_path, notice: 'Exam removed'
     else
-      redirect_to root_path, alert: 'Error! could not remove'
+      redirect_to exams_path, alert: 'Error! could not remove'
     end
   end
 

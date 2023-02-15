@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Exam < ApplicationRecord
-  default_scope { order(:created_at) }
+  default_scope { reorder(created_at: :desc) }
 
   before_save :calculate_total_marks
 

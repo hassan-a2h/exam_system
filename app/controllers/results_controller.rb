@@ -22,7 +22,7 @@ class ResultsController < ApplicationController
     if @result.save
       redirect_to @result
     else
-      redirect_to root_path, alert: 'Must answer all questions'
+      redirect_to attempt_path(@result.schedule_id), alert: 'Must answer all questions'
     end
   end
 
