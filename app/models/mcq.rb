@@ -7,6 +7,9 @@ class Mcq < ApplicationRecord
   has_many :mcq_answers, dependent: :destroy
 
   validates :marks, :question, :correct_option, :option1, :option2, :option3, :option4, presence: true
+  validates :question, length: { minimum: 4 }
+  validates :correct_option, numericality: { in: [1..4] }
+  validates :marks, numericality: { in: [1..10] }
 
   private
 

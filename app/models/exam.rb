@@ -14,7 +14,8 @@ class Exam < ApplicationRecord
   accepts_nested_attributes_for :mcqs, allow_destroy: true
   accepts_nested_attributes_for :blanks, allow_destroy: true
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { minimum:3 }
+  validates :exam_id, presence: true
   validate :empty_exam
 
   enum status: {

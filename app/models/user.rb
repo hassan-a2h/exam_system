@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   validates :name, :email, :type, presence: true
 
+  validates :name, length: { minimum: 3, maximum: 32}
+
   enum type: {
     Admin: 0,
     Teacher: 1,

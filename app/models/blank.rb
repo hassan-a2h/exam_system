@@ -6,6 +6,7 @@ class Blank < ApplicationRecord
   belongs_to :exam, optional: true
 
   validates :marks, :answer, presence: true
+  validates :marks, numericality: { in: [1..10] }
   validate :around_text
 
   private
