@@ -16,7 +16,6 @@ class SubjectsController < ApplicationController
 
   def new
     @subject = Subject.new
-    @teachers = Teacher.all
     authorize @teachers, :new?, policy_class: SubjectPolicy
   end
 

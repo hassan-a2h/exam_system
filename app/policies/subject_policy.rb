@@ -9,7 +9,7 @@ class SubjectPolicy < ApplicationPolicy
   end
 
   def new?
-    user.Admin? && record.present?
+    user.Admin? && Teacher.first.present?
   end
 
   def index?

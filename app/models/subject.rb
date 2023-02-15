@@ -7,6 +7,7 @@ class Subject < ApplicationRecord
   belongs_to :teacher
   has_many :exams, dependent: :destroy
 
-  validates :name, :admin_id, :teacher_id, presence: true
-  validates :name, length: { minimum: 3 }
+  validates :admin_id, :teacher_id, presence: true
+  validates :name, presence: true,
+                   length: { minimum: 3 }
 end
