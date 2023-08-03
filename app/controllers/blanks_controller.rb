@@ -6,7 +6,7 @@ class BlanksController < ApplicationController
   include Question
 
   def destroy
-    if @blank.destroy
+    if @record.destroy
       redirect_to edit_exam_path(@exam), notice: 'Fill in the blank removed'
     else
       redirect_to root_path, alert: 'Could not remove FITB'
@@ -16,10 +16,7 @@ class BlanksController < ApplicationController
   private
 
   def check_empty_exam
-    @blank = Blank.find(params[:id])
-    @exam = Exam.find(@blank.exam_id)
-
-    return unless total_questions(@exam) == 1
+    return unless check_last_question('blank', params[:id])
 
     redirect_to edit_exam_path(@exam), alert: 'Exam needs to have at least one question'
   end

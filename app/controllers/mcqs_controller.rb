@@ -6,7 +6,7 @@ class McqsController < ApplicationController
   include Question
 
   def destroy
-    if @mcq.destroy
+    if @record.destroy
       redirect_to edit_exam_path(@exam), notice: 'Mcq removed'
     else
       redirect_to root_path, alert: 'Could not remove Mcq'
@@ -16,10 +16,7 @@ class McqsController < ApplicationController
   private
 
   def check_empty_exam
-    @mcq = Mcq.find(params[:id])
-    @exam = Exam.find(@mcq.exam_id)
-
-    return unless total_questions(@exam) == 1
+    return unless check_last_question('mcq', params[:id])
 
     redirect_to edit_exam_path(@exam), alert: 'Exam needs to have at least one question'
   end

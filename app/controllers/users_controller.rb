@@ -34,4 +34,8 @@ class UsersController < ApplicationController
   def user_params
     params.require(:student).permit(:picture)
   end
+
+  def new_state
+    puts 'Exiting the office still employed '
+  end
 end
